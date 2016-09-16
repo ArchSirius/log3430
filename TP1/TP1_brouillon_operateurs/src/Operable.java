@@ -14,6 +14,13 @@ public interface Operable {
 		IS_SUBSET,
 		IS_SUPERSET
 	};
+	
+	public static final String UNION = "union";
+	public static final String INTERSECTION = "intersection";
+	public static final String DIFFERENCE = "difference";
+	public static final String SYMMETRIC_DIFFERENCE = "symmetricDifference";
+	public static final String IS_SUBSET = "isSubset";
+	public static final String IS_SUPERSET = "isSuperset";
 
 	public Ensemble union(final Ensemble left, final Ensemble right);
 	public Ensemble intersection(final Ensemble left, final Ensemble right);

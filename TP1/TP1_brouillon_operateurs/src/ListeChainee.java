@@ -41,6 +41,41 @@ public class ListeChainee extends LinkedList<Ensemble> implements Operable {
 		}
 	}
 	
+	/**
+	* Constructs a new ListeChainee containing two input sets and a resulting set based on a specific operation from String input.
+	* This constructor has been deprecated in v1.1
+	* @deprecated 1.1
+	* @throws UnsupportedOperationException
+	* @param operation the operation to execute
+	* @param left      the left set
+	* @param right     the right set
+	*/
+	public ListeChainee(final String operation, final Ensemble left, final Ensemble right) throws UnsupportedOperationException {
+		super(Arrays.asList(left, right));
+		switch(operation) {
+			case UNION:
+				add(union(left, right));
+				break;
+			case INTERSECTION:
+				add(intersection(left, right));
+				break;
+			case DIFFERENCE:
+				add(difference(left, right));
+				break;
+			case SYMMETRIC_DIFFERENCE:
+				add(symmetricDifference(left, right));
+				break;
+			case IS_SUBSET:
+				add(isSubset(left, right));
+				break;
+			case IS_SUPERSET:
+				add(isSuperset(left, right));
+				break;
+			default:
+				throw new UnsupportedOperationException("Operation \"" + operation + "\" is not supported");
+		}
+	}
+	
    /**
 	* Returns the union of two sets.
 	* A ∪ B = { x : x ∈ A ∨ x ∈ B }

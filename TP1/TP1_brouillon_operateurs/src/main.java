@@ -1,34 +1,101 @@
+import java.util.Scanner;
+
 public class main {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		final Ensemble e1 = new Ensemble(2, 5, 15, 23);
-		final Ensemble e2 = new Ensemble(2, 3, 5, 12, 56);
+		// Ask user for operation
+		System.out.println("Opération valides: ");
+		System.out.println("1) " + Operable.UNION);
+		System.out.println("2) " + Operable.INTERSECTION);
+		System.out.println("3) " + Operable.DIFFERENCE);
+		System.out.println("4) " + Operable.SYMMETRIC_DIFFERENCE);
+		System.out.println("5) " + Operable.IS_SUBSET);
+		System.out.println("6) " + Operable.IS_SUPERSET);
+		System.out.print("Entrez une opération: ");
+		final Scanner scanner = new Scanner(System.in);
+		Operable.operation operation = null;
+		try {
+			operation = getOperation(scanner.nextLine());
+		}
+		catch (final UnsupportedOperationException e) {
+			System.out.println(e.getMessage());
+			System.exit(0);
+		}
 		
-		final ListeChainee listeUnion = new ListeChainee(Operable.operation.UNION, e1, e2);
-		System.out.println("union:\t" + listeUnion.toString());
+		// Ask user for left Ensemble
+		System.out.println("Entrez le premier ensemble constitué d'entiers séparés par une virgule: ");
+		Ensemble ensemble1 = null;
+		try {
+			ensemble1 = str2Ensemble(scanner.nextLine());
+		}
+		catch (final NumberFormatException e) {
+			System.out.println("Format invalide");
+			System.exit(0);
+		}
 		
-		final ListeChainee listeIntersection = new ListeChainee(Operable.operation.INTERSECTION, e1, e2);
-		System.out.println("intersection:\t" + listeIntersection.toString());
+		// Ask user for right Ensemble
+		System.out.println("Entrez le second ensemble constitué d'entiers séparés par une virgule: ");
+		Ensemble ensemble2 = null;
+		try {
+			ensemble2 = str2Ensemble(scanner.nextLine());
+		}
+		catch (final NumberFormatException e) {
+			System.out.println("Format invalide");
+			System.exit(0);
+		}
+		scanner.close();
 		
-		final ListeChainee listeDifference = new ListeChainee(Operable.operation.DIFFERENCE, e1, e2);
-		System.out.println("difference:\t" + listeDifference.toString());
+		// Show results
+		System.out.print("Résultat: ");
+		final ListeChainee resultat = new ListeChainee(operation, ensemble1, ensemble2);
+		System.out.println(resultat.toString());
 		
-		final ListeChainee listeSymmetricDifference = new ListeChainee(Operable.operation.SYMMETRIC_DIFFERENCE, e1, e2);
-		System.out.println("symmetric difference:\t" + listeSymmetricDifference.toString());
-		
-		final ListeChainee listeSubset1 = new ListeChainee(Operable.operation.IS_SUBSET, e1, e2);
-		System.out.println("subset:\t" + listeSubset1.toString());
-		
-		final ListeChainee listeSubset2 = new ListeChainee(Operable.operation.IS_SUBSET, e1, new Ensemble(2, 23, 15, 5, 56, 12));
-		System.out.println("subset:\t" + listeSubset2.toString());
-		
-		final ListeChainee listeSuperset1 = new ListeChainee(Operable.operation.IS_SUPERSET, e1, e2);
-		System.out.println("superset:\t" + listeSuperset1.toString());
-		
-		final ListeChainee listeSuperset2 = new ListeChainee(Operable.operation.IS_SUPERSET, e2, new Ensemble(2, 3, 5));
-		System.out.println("superset:\t" + listeSuperset2.toString());
+		System.exit(0);
+	}
+	
+	/**
+	* Returns the input operation in enum format if input is valid
+	* @throws UnsupportedOperationException
+	* @param input the user input
+	* @return the resulting enum
+	*/
+	final static private Operable.operation getOperation(final String input) throws UnsupportedOperationException {
+		if (input.equals("1") || input.toLowerCase().equals(Operable.UNION.toLowerCase())) {
+			return Operable.operation.UNION;
+		}
+		if (input.equals("2") || input.toLowerCase().equals(Operable.INTERSECTION.toLowerCase())) {
+			return Operable.operation.INTERSECTION;
+		}
+		if (input.equals("3") || input.toLowerCase().equals(Operable.DIFFERENCE.toLowerCase())) {
+			return Operable.operation.DIFFERENCE;
+		}
+		if (input.equals("4") || input.toLowerCase().equals(Operable.SYMMETRIC_DIFFERENCE.toLowerCase())) {
+			return Operable.operation.SYMMETRIC_DIFFERENCE;
+		}
+		if (input.equals("5") || input.toLowerCase().equals(Operable.IS_SUBSET.toLowerCase())) {
+			return Operable.operation.IS_SUBSET;
+		}
+		if (input.equals("6") || input.toLowerCase().equals(Operable.IS_SUPERSET.toLowerCase())) {
+			return Operable.operation.IS_SUPERSET;
+		}
+		throw new UnsupportedOperationException("Operation \"" + input + "\" is not supported");
+	}
+	
+	/**
+	* Returns a constructed Ensemble from user input
+	* @throws NumberFormatException
+	* @param input the user input
+	* @return the constructed Ensemble
+	*/
+	final static private Ensemble str2Ensemble(final String input) throws NumberFormatException {
+		final String[] array = input.split(",");
+		Integer[] values = new Integer[array.length];
+		for (int i = 0; i < array.length; ++i) {
+			values[i] = Integer.parseInt(array[i].replaceAll(" ", ""));
+		}
+		return new Ensemble(values);
 	}
 }

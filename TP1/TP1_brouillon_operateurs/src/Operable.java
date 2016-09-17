@@ -5,7 +5,7 @@
  * @version 1.0
  */
 public interface Operable {
-	
+
 	public enum operation {
 		UNION,
 		INTERSECTION,
@@ -14,7 +14,7 @@ public interface Operable {
 		IS_SUBSET,
 		IS_SUPERSET
 	};
-	
+
 	public static final String UNION = "union";
 	public static final String INTERSECTION = "intersection";
 	public static final String DIFFERENCE = "difference";

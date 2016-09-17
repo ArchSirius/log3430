@@ -5,9 +5,9 @@
  * @version 1.2
  */
 public class ListeChainee implements Operable {
-	
+
 	private Node mHead;
-	
+
    /**
 	* Constructs a new ListeChainee containing two input sets and a resulting set based on a specific operation.
 	* @param operation the operation to execute
@@ -39,7 +39,7 @@ public class ListeChainee implements Operable {
 				break;
 		}
 	}
-	
+
 	/**
 	* Constructs a new ListeChainee containing two input sets and a resulting set based on a specific operation from String input.
 	* This constructor has been deprecated in v1.1
@@ -74,7 +74,7 @@ public class ListeChainee implements Operable {
 				throw new UnsupportedOperationException("Operation \"" + operation + "\" is not supported");
 		}
 	}
-	
+
    /**
 	* Returns the union of two sets.
 	* A ∪ B = { x : x ∈ A ∨ x ∈ B }
@@ -88,7 +88,7 @@ public class ListeChainee implements Operable {
 		result.addAll(right);
 		return result.unique().sort();
 	}
-	
+
    /**
 	* Returns the intersection of two sets.
 	* A ∩ B = { x : x ∈ A ^ x ∈ B }
@@ -105,7 +105,7 @@ public class ListeChainee implements Operable {
 		}
 		return result.unique().sort();
 	}
-	
+
 	/**
 	* Returns the difference of two sets.
 	* A \ B = { x : x ∈ A ^ x ∉ B }
@@ -122,7 +122,7 @@ public class ListeChainee implements Operable {
 		}
 		return result.unique().sort();
 	}
-	
+
 	/**
 	* Returns the symmetric difference of two sets.
 	* A ∆ B = { x : (x ∈ A) ⊕ (x ∈ B) }
@@ -144,7 +144,7 @@ public class ListeChainee implements Operable {
 		}
 		return result.unique().sort();
 	}
-	
+
 	/**
 	* Returns {1} if the left set is a subset of the right set; {0} otherwise.
 	* A ⊆ B
@@ -155,7 +155,7 @@ public class ListeChainee implements Operable {
 	final public Ensemble isSubset(final Ensemble left, final Ensemble right) {
 		return new Ensemble(right.containsAll(left) ? 1 : 0);
 	}
-	
+
 	/**
 	* Returns {1} if the left set is a superset of the right set; {0} otherwise.
 	* A ⊇ B
@@ -166,7 +166,7 @@ public class ListeChainee implements Operable {
 	final public Ensemble isSuperset(final Ensemble left, final Ensemble right) {
 		return new Ensemble(left.containsAll(right) ? 1 : 0);
 	}
-	
+
    /**
 	* Appends the specified Ensemble to the end of this ListeChainee.
 	* @param ensemble Ensemble to be appended to this ListeChainee
@@ -183,7 +183,7 @@ public class ListeChainee implements Operable {
 			node.setNext(new Node(ensemble, null));
 		}
 	}
-	
+
 	/**
 	* Removes the element at the specified position in this ListeChainee.
 	* Shifts any subsequent elements to the left (subtracts one from their indices).
@@ -213,7 +213,7 @@ public class ListeChainee implements Operable {
 		}
 		return null;
 	}
-	
+
 	/**
 	* Removes the first occurrence of the specified Ensemble in this ListeChainee (when traversing the ListeChainee from head to tail).
 	* If the ListeChainee does not contain the Ensemble, it is unchanged.
@@ -240,7 +240,7 @@ public class ListeChainee implements Operable {
 		}
 		return false;
 	}
-	
+
 	/**
 	* Changes the Ensemble at the specified position in this ListeChainee.
 	* @param ensemble Ensemble to replace the previous one
@@ -262,7 +262,7 @@ public class ListeChainee implements Operable {
 		}
 		return false;
 	}
-	
+
 	/**
 	* Returns the Ensemble at the specified position in this ListeChainee.
 	* @param position position of the element to return
@@ -282,7 +282,7 @@ public class ListeChainee implements Operable {
 		}
 		return null;
 	}
-	
+
 	/**
 	* Returns the number of Ensembles in this ListeChainee.
 	* @return the number of Ensembles in this ListeChainee
@@ -299,7 +299,7 @@ public class ListeChainee implements Operable {
 		}
 		return size;
 	}
-	
+
 	/**
 	* Removes all of the Ensembles from this ListeChainee.
 	* The ListeChainee will be empty after this call returns.
@@ -307,7 +307,7 @@ public class ListeChainee implements Operable {
 	public void reset() {
 		mHead = null;
 	}
-	
+
 	/**
 	* Returns a string representation of this ListeChainee.
 	* The string representation consists of a list of the ListeChainee's Ensembles in the order they are returned by its iterator.
@@ -330,8 +330,8 @@ public class ListeChainee implements Operable {
 		}
 		return s;
 	}
-	
-	
+
+
 	/**
 	 * This class represents a node in the ListeChainee wrapping an Ensemble.
 	 *
@@ -339,7 +339,7 @@ public class ListeChainee implements Operable {
 	 * @version 1.0
 	 */
 	protected static class Node {
-		
+
 		private Ensemble mData;
 		private Node mNext;
 
@@ -352,7 +352,7 @@ public class ListeChainee implements Operable {
 			mData = data;
 			mNext = next;
 		}
-		
+
 	   /**
 		* Returns the Ensemble contained in this Node.
 		* @return the Ensemble contained in this Node
@@ -360,7 +360,7 @@ public class ListeChainee implements Operable {
 		final public Ensemble getData() {
 			return mData;
 		}
-		
+
 	   /**
 		* Changes the Ensemble contained in this node.
 		* @param ensemble the new Ensemble to replace the previous one
@@ -368,7 +368,7 @@ public class ListeChainee implements Operable {
 		public void setData(final Ensemble ensemble) {
 			mData = ensemble;
 		}
-		
+
 	   /**
 		* Returns true if a next Node following this one in this ListeChainee exists.
 		* @return true if a next Node following this one in this ListeChainee exists
@@ -376,7 +376,7 @@ public class ListeChainee implements Operable {
 		final public boolean hasNext() {
 			return mNext != null;
 		}
-		
+
 	   /**
 		* Returns the next Node following this one in this ListeChainee.
 		* @return the next Node
@@ -384,7 +384,7 @@ public class ListeChainee implements Operable {
 		final public Node getNext() {
 			return mNext;
 		}
-		
+
 	   /**
 		* Changes the next Node following this one in this ListeChainee.
 		* @param node the next Node

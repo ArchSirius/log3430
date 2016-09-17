@@ -24,7 +24,7 @@ public class main {
 			System.out.println(e.getMessage());
 			System.exit(0);
 		}
-		
+
 		// Ask user for left Ensemble
 		System.out.println("Entrez le premier ensemble constitué d'entiers séparés par une virgule: ");
 		Ensemble ensemble1 = null;
@@ -35,7 +35,7 @@ public class main {
 			System.out.println("Format invalide");
 			System.exit(0);
 		}
-		
+
 		// Ask user for right Ensemble
 		System.out.println("Entrez le second ensemble constitué d'entiers séparés par une virgule: ");
 		Ensemble ensemble2 = null;
@@ -47,15 +47,15 @@ public class main {
 			System.exit(0);
 		}
 		scanner.close();
-		
+
 		// Show results
 		System.out.print("Résultat: ");
 		final ListeChainee resultat = new ListeChainee(operation, ensemble1, ensemble2);
 		System.out.println(resultat.toString());
-		
+
 		System.exit(0);
 	}
-	
+
 	/**
 	* Returns the input operation in enum format if input is valid
 	* @throws UnsupportedOperationException
@@ -83,7 +83,7 @@ public class main {
 		}
 		throw new UnsupportedOperationException("Operation \"" + input + "\" is not supported");
 	}
-	
+
 	/**
 	* Returns a constructed Ensemble from user input
 	* @throws NumberFormatException

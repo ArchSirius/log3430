@@ -12,7 +12,7 @@ public class UnsupportedOperationException extends Exception {
 	public UnsupportedOperationException() {
 		super();
 	}
-	
+
    /**
 	* Constructs a new UnsupportedOperationException with a message.
 	* @param message a message

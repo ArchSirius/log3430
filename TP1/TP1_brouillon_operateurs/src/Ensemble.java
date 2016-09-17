@@ -9,7 +9,7 @@ import java.util.Collections;
  * @version 1.0
  */
 public class Ensemble extends ArrayList<Integer> {
-	
+
    /**
 	* Constructs a new Ensemble from an array of integers.
 	* @param entiers an array of integers
@@ -17,7 +17,7 @@ public class Ensemble extends ArrayList<Integer> {
 	public Ensemble(Integer... entiers) {
 		super(Arrays.asList(entiers));
 	}
-	
+
    /**
 	* Sorts this Ensemble in ascending numerical order.
 	* @return this Ensemble
@@ -26,7 +26,7 @@ public class Ensemble extends ArrayList<Integer> {
 		Collections.sort(this);
 		return this;
 	}
-	
+
    /**
 	* Removes duplicates from this Ensemble.
 	* @return this Ensemble
@@ -42,7 +42,7 @@ public class Ensemble extends ArrayList<Integer> {
 		addAll(unique);
 		return this;
 	}
-	
+
 	/**
 	* Returns a string representation of this Ensemble.
 	* The string representation consists of a list of the Ensemble's integers in the order they are returned by its iterator, enclosed in brackets ("{}").

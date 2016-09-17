@@ -1,13 +1,12 @@
-import java.util.Arrays;
-import java.util.LinkedList;
-
 /**
- * This class represents a linked list of sets of integers.
+ * This class represents a linked list of Ensembles.
  *
  * @author Samuel Rondeau, Jennifer Khoury
- * @version 1.1
+ * @version 1.2
  */
-public class ListeChainee extends LinkedList<Ensemble> implements Operable {
+public class ListeChainee implements Operable {
+	
+	private Node mHead;
 	
    /**
 	* Constructs a new ListeChainee containing two input sets and a resulting set based on a specific operation.
@@ -16,7 +15,7 @@ public class ListeChainee extends LinkedList<Ensemble> implements Operable {
 	* @param right     the right set
 	*/
 	public ListeChainee(final Operable.operation operation, final Ensemble left, final Ensemble right) {
-		super(Arrays.asList(left, right));
+		mHead = new Node(left, new Node(right, null));
 		switch(operation) {
 			case UNION:
 				add(union(left, right));
@@ -51,7 +50,7 @@ public class ListeChainee extends LinkedList<Ensemble> implements Operable {
 	* @param right     the right set
 	*/
 	public ListeChainee(final String operation, final Ensemble left, final Ensemble right) throws UnsupportedOperationException {
-		super(Arrays.asList(left, right));
+		mHead = new Node(left, new Node(right, null));
 		switch(operation) {
 			case UNION:
 				add(union(left, right));
@@ -171,10 +170,18 @@ public class ListeChainee extends LinkedList<Ensemble> implements Operable {
    /**
 	* Appends the specified Ensemble to the end of this ListeChainee.
 	* @param ensemble Ensemble to be appended to this ListeChainee
-	* @return true (as specified by {@link Collection.#add(E)})
 	*/
-	public boolean add(final Ensemble ensemble) {
-		return super.add(ensemble);
+	public void add(final Ensemble ensemble) {
+		if (mHead == null) {
+			mHead = new Node(ensemble, null);
+		}
+		else {
+			Node node = mHead;
+			while (node.hasNext()) {
+				node = node.getNext();
+			}
+			node.setNext(new Node(ensemble, null));
+		}
 	}
 	
 	/**
@@ -185,7 +192,26 @@ public class ListeChainee extends LinkedList<Ensemble> implements Operable {
 	* @return the element previously at the specified position
 	*/
 	public Ensemble removeAt(final int position) {
-		return super.remove(position);
+		if (mHead == null) {
+			return null;
+		}
+		if (position == 0) {
+			final Ensemble data = mHead.getData();
+			mHead = mHead.getNext();
+			return data;
+		}
+		Node previous = mHead;
+		Node current = mHead;
+		int i = 0;
+		while (current != null) {
+			if (i++ == position) {
+				previous.setNext(current.getNext());
+				return current.getData();
+			}
+			previous = current;
+			current = current.getNext();
+		}
+		return null;
 	}
 	
 	/**
@@ -195,17 +221,46 @@ public class ListeChainee extends LinkedList<Ensemble> implements Operable {
 	* @return true if the ListeChainee contained the specified Ensemble
 	*/
 	public boolean removeItem(final Ensemble ensemble) {
-		return super.removeFirstOccurrence(ensemble);
+		if (mHead == null) {
+			return false;
+		}
+		if (mHead.getData().equals(ensemble)) {
+			mHead = mHead.getNext();
+			return true;
+		}
+		Node previous = mHead;
+		Node current = mHead;
+		while (current != null) {
+			if (current.getData().equals(ensemble)) {
+				previous.setNext(current.getNext());
+				return true;
+			}
+			previous = current;
+			current = current.getNext();
+		}
+		return false;
 	}
 	
 	/**
-	* Appends the specified Ensemble to the end of this ListeChainee.
-	* This method is equivalent to {@#linkaddLast(E)}.
-	* @param ensemble Ensemble to be inserted
-	* @param position position at which the specified Ensemble is to be inserted
+	* Changes the Ensemble at the specified position in this ListeChainee.
+	* @param ensemble Ensemble to replace the previous one
+	* @param position position at which the change is to be done
+	* @return true if the ListeChainee contained an Ensemble at the specified position and change was successful
 	*/
-	public void setAt(final Ensemble ensemble, final int position) {
-		super.add(position, ensemble);
+	public boolean setAt(final Ensemble ensemble, final int position) {
+		if (mHead == null) {
+			return false;
+		}
+		Node node = mHead;
+		int i = 0;
+		while (node != null) {
+			if (i++ == position) {
+				node.setData(ensemble);
+				return true;
+			}
+			node = node.getNext();
+		}
+		return false;
 	}
 	
 	/**
@@ -214,23 +269,43 @@ public class ListeChainee extends LinkedList<Ensemble> implements Operable {
 	* @return the Ensemble at the specified position in this ListeChainee
 	*/
 	final public Ensemble getAt(final int position) {
-		return super.get(position);
+		if (mHead == null) {
+			return null;
+		}
+		Node node = mHead;
+		int i = 0;
+		while (node != null) {
+			if (i++ == position) {
+				return node.getData();
+			}
+			node = node.getNext();
+		}
+		return null;
 	}
 	
 	/**
-	* Returns the number of Ensemble in this ListeChainee.
-	* @return the number of elements in this list
+	* Returns the number of Ensembles in this ListeChainee.
+	* @return the number of Ensembles in this ListeChainee
 	*/
 	final public int getSize() {
-		return super.size();
+		if (mHead == null) {
+			return 0;
+		}
+		int size = 0;
+		Node node = mHead;
+		while (node != null) {
+			node = node.getNext();
+			++size;
+		}
+		return size;
 	}
 	
 	/**
-	* Removes all of the Ensemble from this ListeChainee.
+	* Removes all of the Ensembles from this ListeChainee.
 	* The ListeChainee will be empty after this call returns.
 	*/
 	public void reset() {
-		super.clear();
+		mHead = null;
 	}
 	
 	/**
@@ -244,12 +319,78 @@ public class ListeChainee extends LinkedList<Ensemble> implements Operable {
 	final public String toString() {
 		String s = "";
 		int i = 0;
-		for (final Ensemble ensemble : this) {
+		Node node = mHead;
+		while (node != null) {
+			final Ensemble ensemble = node.getData();
 			if (i++ > 0) {
 				s += ", ";
 			}
 			s += ensemble.toString();
+			node = node.getNext();
 		}
 		return s;
+	}
+	
+	
+	/**
+	 * This class represents a node in the ListeChainee wrapping an Ensemble.
+	 *
+	 * @author Samuel Rondeau, Jennifer Khoury
+	 * @version 1.0
+	 */
+	protected static class Node {
+		
+		private Ensemble mData;
+		private Node mNext;
+
+	   /**
+		* Constructs a new Node containing an Ensemble and referencing its next node in the ListeChainee, if any.
+		* @param data the Ensemble contained in this Node
+		* @param next the next node
+		*/
+		public Node(final Ensemble data, final Node next) {
+			mData = data;
+			mNext = next;
+		}
+		
+	   /**
+		* Returns the Ensemble contained in this Node.
+		* @return the Ensemble contained in this Node
+		*/
+		final public Ensemble getData() {
+			return mData;
+		}
+		
+	   /**
+		* Changes the Ensemble contained in this node.
+		* @param ensemble the new Ensemble to replace the previous one
+		*/
+		public void setData(final Ensemble ensemble) {
+			mData = ensemble;
+		}
+		
+	   /**
+		* Returns true if a next Node following this one in this ListeChainee exists.
+		* @return true if a next Node following this one in this ListeChainee exists
+		*/
+		final public boolean hasNext() {
+			return mNext != null;
+		}
+		
+	   /**
+		* Returns the next Node following this one in this ListeChainee.
+		* @return the next Node
+		*/
+		final public Node getNext() {
+			return mNext;
+		}
+		
+	   /**
+		* Changes the next Node following this one in this ListeChainee.
+		* @param node the next Node
+		*/
+		public void setNext(final Node node) {
+			mNext = node;
+		}
 	}
 }

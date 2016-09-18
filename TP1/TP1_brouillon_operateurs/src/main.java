@@ -6,53 +6,62 @@ public class main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// Ask user for operation
-		System.out.println("Opération valides: ");
-		System.out.println("1) " + Operable.UNION);
-		System.out.println("2) " + Operable.INTERSECTION);
-		System.out.println("3) " + Operable.DIFFERENCE);
-		System.out.println("4) " + Operable.SYMMETRIC_DIFFERENCE);
-		System.out.println("5) " + Operable.IS_SUBSET);
-		System.out.println("6) " + Operable.IS_SUPERSET);
-		System.out.print("Entrez une opération: ");
 		final Scanner scanner = new Scanner(System.in);
-		Operable.operation operation = null;
-		try {
-			operation = getOperation(scanner.nextLine());
-		}
-		catch (final UnsupportedOperationException e) {
-			System.out.println(e.getMessage());
-			System.exit(0);
-		}
+		do {
+			boolean terminateFlow = false;
+			// Ask user for operation
+			System.out.println("Opération valides: ");
+			System.out.println("1) " + Operable.UNION);
+			System.out.println("2) " + Operable.INTERSECTION);
+			System.out.println("3) " + Operable.DIFFERENCE);
+			System.out.println("4) " + Operable.SYMMETRIC_DIFFERENCE);
+			System.out.println("5) " + Operable.IS_SUBSET);
+			System.out.println("6) " + Operable.IS_SUPERSET);
+			System.out.print("Entrez une opération: ");
+			Operable.operation operation = null;
+			try {
+				operation = getOperation(scanner.nextLine());
+			}
+			catch (final UnsupportedOperationException e) {
+				System.out.println(e.getMessage());
+				terminateFlow = true;
+			}
 
-		// Ask user for left Ensemble
-		System.out.println("Entrez le premier ensemble constitué d'entiers séparés par une virgule: ");
-		Ensemble ensemble1 = null;
-		try {
-			ensemble1 = str2Ensemble(scanner.nextLine());
-		}
-		catch (final NumberFormatException e) {
-			System.out.println("Format invalide");
-			System.exit(0);
-		}
+			Ensemble ensemble1 = null;
+			if (!terminateFlow) {
+				// Ask user for left Ensemble
+				System.out.println("Entrez le premier ensemble constitué d'entiers séparés par une virgule: ");
+				try {
+					ensemble1 = str2Ensemble(scanner.nextLine());
+				}
+				catch (final NumberFormatException e) {
+					System.out.println("Format invalide");
+					terminateFlow = true;
+				}
+			}
 
-		// Ask user for right Ensemble
-		System.out.println("Entrez le second ensemble constitué d'entiers séparés par une virgule: ");
-		Ensemble ensemble2 = null;
-		try {
-			ensemble2 = str2Ensemble(scanner.nextLine());
+			Ensemble ensemble2 = null;
+			if (!terminateFlow) {
+				// Ask user for right Ensemble
+				System.out.println("Entrez le second ensemble constitué d'entiers séparés par une virgule: ");
+				try {
+					ensemble2 = str2Ensemble(scanner.nextLine());
+				}
+				catch (final NumberFormatException e) {
+					System.out.println("Format invalide");
+					terminateFlow = true;
+				}
+			}
+
+			if (!terminateFlow) {
+				// Show results
+				System.out.print("Résultat: ");
+				final ListeChainee resultat = new ListeChainee(operation, ensemble1, ensemble2);
+				System.out.println(resultat);
+			}
 		}
-		catch (final NumberFormatException e) {
-			System.out.println("Format invalide");
-			System.exit(0);
-		}
+		while (askContinue(scanner));
 		scanner.close();
-
-		// Show results
-		System.out.print("Résultat: ");
-		final ListeChainee resultat = new ListeChainee(operation, ensemble1, ensemble2);
-		System.out.println(resultat.toString());
-
 		System.exit(0);
 	}
 
@@ -97,5 +106,15 @@ public class main {
 			values[i] = Integer.parseInt(array[i].replaceAll(" ", ""));
 		}
 		return new Ensemble(values);
+	}
+
+	final static private boolean askContinue(final Scanner scanner) {
+		System.out.print("Continuer? [Y/n] ");
+		final String input = scanner.nextLine();
+		if (input.toLowerCase().equals("y") || input.equals("")) {
+			System.out.println();
+			return true;
+		}
+		return false;
 	}
 }

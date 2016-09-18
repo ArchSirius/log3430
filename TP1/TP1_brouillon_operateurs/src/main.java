@@ -65,7 +65,7 @@ public class main {
 		System.exit(0);
 	}
 
-	/**
+   /**
 	* Returns the input operation in enum format if input is valid
 	* @throws UnsupportedOperationException
 	* @param input the user input
@@ -93,7 +93,7 @@ public class main {
 		throw new UnsupportedOperationException("Operation \"" + input + "\" is not supported");
 	}
 
-	/**
+   /**
 	* Returns a constructed Ensemble from user input
 	* @throws NumberFormatException
 	* @param input the user input
@@ -108,6 +108,11 @@ public class main {
 		return new Ensemble(values);
 	}
 
+   /**
+	* Returns true if the user wants to continue.
+	* @param scanner the scanner used in the main loop for optimization purposes
+	* @return true if the user wants to continue
+	*/
 	final static private boolean askContinue(final Scanner scanner) {
 		System.out.print("Continuer? [Y/n] ");
 		final String input = scanner.nextLine();

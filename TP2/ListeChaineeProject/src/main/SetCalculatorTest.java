@@ -18,7 +18,7 @@ public class SetCalculatorTest {
 	private ArrayList<Object> setR;
 	
 	@BeforeClass
-	public void setUp(){
+	public void InitialSetUp(){
 		calculator = new SetCalculatorImpl();
 		setA = new ArrayList<Object>();
 		setB = new ArrayList<Object>();
@@ -133,6 +133,4 @@ public class SetCalculatorTest {
 		setR.add(String.valueOf(true));
 		assertEquals("{-27,2,-4,15} must be a superset of {15,2,-4}", setR, calculator.isSuperset(setA, setB));
 	}
-	
-
 }

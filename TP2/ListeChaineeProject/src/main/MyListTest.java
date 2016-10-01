@@ -16,7 +16,7 @@ public class MyListTest {
 	private ArrayList<Object> arrayD;
 	
 	@Before
-	public void setUp(){
+	public void recurentSetUp(){
 		list = new MyListImpl();
 		
 		// Create 4 arrays 

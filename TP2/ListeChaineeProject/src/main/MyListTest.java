@@ -181,7 +181,7 @@ public class MyListTest {
 			fail("Expected IndexOutOfBoundsException");
 		}
 	}
-	
+
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void testSetAtException() {
 		// Liste non vide, index superieur � la taille
@@ -195,21 +195,64 @@ public class MyListTest {
 		list.setAt(setD,-1);
 	}
 	
+   /*
+	* Tests MyList.setAt
+	* A1: Index < 0
+	* A2: Index = 0
+	* A3: 0 < Index < list.size
+	* A4: Index = list.size
+	* A5: Index > list.size
+	*
+	* A[1,4-5] should throw IndexOutOfBoundsException
+	* A[2-4]   should set
+	*/
 	@Test
 	public void testSetAt() {
-		// Liste non vide, element non vide, premier de la liste
-		list.setAt(setD,0);
-		assertEquals("First element must be arrayD", setD, list.getAt(0));
-		// Size shouldn't change
-		assertEquals("Size must be 3", 3, list.getSize());
-		
-		// Liste non vide, element vide, dernier de la liste
-		setA.clear();
-		list.setAt(setA,list.getSize()-1);
-		assertEquals("Last element must be arrayA", setA, list.getAt(list.getSize()-1));
-		
-		// Size shouldn't change
-		assertEquals("Size must be 3", 3, list.getSize());
+		// A2: Index = 0
+		list.setAt(setD, 0);
+		assertEquals("First element should be setD",
+				setD, list.getAt(0));
+
+		// A3: 0 < Index < list.size
+		list.setAt(setD, 2);
+		assertEquals("Last element should be setD",
+				setD, list.getAt(2));
+
+		// A4: Index = list.size
+		try {
+			list.setAt(setD, 3);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
+
+		// A5: Index > list.size
+		try {
+			list.setAt(setD, 4);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
+
+		// A1: Index < 0
+		try {
+			list.setAt(setD, -1);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
 	}
 	
 	@Test(expected = ArrayIndexOutOfBoundsException.class)

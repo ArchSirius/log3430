@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ListeChaineeECTest {
+public class ListeChaineeTest {
 
 	private ListeChaineeImpl listeChainee;
 	private MyListImpl list;
@@ -37,7 +37,7 @@ public class ListeChaineeECTest {
 	}
 
 	@Test
-	public void testUnion() {
+	public void testUnion() throws Exception{
 		val1.add(15);
 		val1.add(2);
 		val1.add(-4);
@@ -60,5 +60,5 @@ public class ListeChaineeECTest {
 		
 		assertEquals("The union of {15,2,-4} and {-27,2,11,325} must be {15,2,-4,-27,11,325}", list, listeChainee.build("union",val1,val2));
 	}
-	
+
 }

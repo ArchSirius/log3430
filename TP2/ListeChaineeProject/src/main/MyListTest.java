@@ -1,107 +1,127 @@
 package main;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 public class MyListTest {
 
 	private MyListImpl list;
-	private ArrayList<Object> arrayA;
-	private ArrayList<Object> arrayB;
-	private ArrayList<Object> arrayC;
-	private ArrayList<Object> arrayD;
-	
+	private ArrayList<Object> setA;
+	private ArrayList<Object> setB;
+	private ArrayList<Object> setC;
+	private ArrayList<Object> setD;
+
 	@Before
-	public void recurentSetUp(){
+	public void setUp() {
 		list = new MyListImpl();
-		
-		// Create 4 arrays 
-		arrayA = new ArrayList<Object>();
-		arrayB = new ArrayList<Object>();
-		arrayC = new ArrayList<Object>();
-		arrayD = new ArrayList<Object>();
-		arrayA.add(1);
-		arrayB.add(2);
-		arrayC.add(3);
-		arrayD.add(4);
-		
-		// Start with a list of three arrays
-		list.add(arrayA);
-		list.add(arrayB);
-		list.add(arrayC);
-		
+
+		// Create 4 sets
+		setA = new ArrayList<Object>();
+		setB = new ArrayList<Object>();
+		setC = new ArrayList<Object>();
+		setD = new ArrayList<Object>();
+		setA.add(1);
+		setB.add(2);
+		setC.add(3);
+		setD.add(4);
+
+		// Start with a list of three sets
+		list.add(setA);
+		list.add(setB);
+		list.add(setC);
 	}
-	
+
+   /*
+	* Tests MyList.add
+	* A1: List is empty
+	* A2: List is not empty
+	* B1: Element is empty
+	* B2: Element is not empty and is not in List
+	* B3: Element is not empty and is in List
+	*
+	* A1B1 should add
+	* A1B2 should add
+	* A1B3 should add
+	* A2B1 should add
+	* A2B2 should add
+	* A2B3 --
+	*/
 	@Test
 	public void testAdd() {
-		assertEquals("Initial size must be 3", 3, list.getSize());
-		
-		// Liste non vide, ajout d’un nouvel ensemble
-		list.add(arrayD);
-		assertEquals("Size must be 4", 4, list.getSize());
-		
-		// Liste non vide, ajout d’un ensemble déjà présent
-		list.add(arrayD);
-		assertEquals("Size must be 5", 5, list.getSize());
-		
-		// Liste non vide, ajout d’un ensemble vide
-		arrayD.clear();
-		list.add(arrayD);
-		assertEquals("Size must be 6", 6, list.getSize());
-		
-		// Liste vide, ajout d’un ensemble vide
+		// Non empty list, add new set
+		list.add(setD);
+		assertEquals("Size should be 4",
+				4, list.getSize());
+
+		// Non empty list, add existing set
+		list.add(setD);
+		assertEquals("Size should be 5",
+				5, list.getSize());
+
+		// Non empty list, add empty set
+		setD = new ArrayList<Object>();
+		list.add(setD);
+		assertEquals("Size should be 6",
+				6, list.getSize());
+
+		// Empty list, add empty set
 		list = new MyListImpl();
-		list.add(arrayD);
-		assertEquals("Size must be 1", 1, list.getSize());
-		
-		// Lise vide, ajout d’un ensemble non vide
+		list.add(setD);
+		assertEquals("Size should be 1",
+				1, list.getSize());
+
+		// Empty list, add non empty set
 		list = new MyListImpl();
-		list.add(arrayA);
-		assertEquals("Size must be 1", 1, list.getSize());
+		list.add(setA);
+		assertEquals("Size should be 1",
+				1, list.getSize());
 	}
-	
+
+   /*
+	* Tests MyList.removeItem
+	* A1: List is empty
+	* A2: List is not empty and has no doubles
+	* A3: List is not empty and has doubles
+	* B1: Element is not in List
+	* B2: Element is in List
+	*
+	* A1     B1 should not remove
+	* A1     B2 --
+	* A[2-3] B1 should remove 0
+	* A2     B2 should remove 1
+	* A3     B2 should remove N
+	*/
 	@Test
 	public void testRemoveItem() {
-		// Liste non vide sans doublon, item non vide et non présent
-		list.removeItem(arrayD);
-		// Size should be unchanged
-		assertEquals("Size must be 3", 3, list.getSize());
-		
-		// Liste non vide sans doublons, item vide
-		arrayD.clear();
-		list.removeItem(arrayD);
-		// Size should be unchanged
-		assertEquals("Size must be 3", 3, list.getSize());
-		
-		// Liste non vide sans doublon, item non vide et présent
-		list.removeItem(arrayA);
-		assertEquals("First element must be arrayB", arrayB, list.getAt(0));
-		// Size should now be one less
-		assertEquals("Size must be 2", 2, list.getSize());
-		
-		// Liste non vide avec doublons, item vide
-		list.add(arrayD);
-		list.add(arrayD);
-		list.removeItem(arrayD);
-		// Size should now be one more
-		assertEquals("Size must be 3", 3, list.getSize());
-		
-		// Liste non vide avec doublon, item non vide et non présent
-		list.add(arrayB);
-		list.removeItem(arrayC);
-		// Size should be unchanged
-		assertEquals("Size must be 3", 3, list.getSize());
-		
-		// Liste non vide avec doublon, item non vide, doublon et présent
-		list.removeItem(arrayB);
-		// Size should be one less
-		assertEquals("Size must be 2", 2, list.getSize());
+		// A1: Non empty list without doubles, remove non existing set
+		list.removeItem(setD);
+		assertEquals("Size should be 3",
+				3, list.getSize());
+
+		// A2B1: Non empty list without doubles, remove existing set
+		list.removeItem(setA);
+		assertEquals("Size should be 2",
+				2, list.getSize());
+		assertEquals("First element should be setB",
+				setB, list.getAt(0));
+
+		// A2B2: Non empty list with doubles, remove non existing set
+		list.add(setB);
+		list.removeItem(setD);
+		assertEquals("Size should be 3",
+				3, list.getSize());
+
+		// A3B2: Non empty list with doubles, remove existing set
+		list.removeItem(setB);
+		assertEquals("Size should be 1",
+				1, list.getSize());
+		assertEquals("First element should be setC",
+				setC, list.getAt(0));
 	}
-	
+
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void testRemoveAtException() {
 		// Liste non vide, index > taille
@@ -111,7 +131,7 @@ public class MyListTest {
 	// On devrait nous occuper du negatif??
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void testRemoveAtNegativ() {
-		// Liste non vide, index négatif
+		// Liste non vide, index nÔøΩgatif
 		list.removeAt(-1);
 	}
 	
@@ -119,20 +139,20 @@ public class MyListTest {
 	public void testRemoveAt() {
 		// Liste non vide, index nul 
 		list.removeAt(0);
-		assertEquals("First element must be arrayB", arrayB, list.getAt(0));
+		assertEquals("First element must be arrayB", setB, list.getAt(0));
 		// Size should now be one less
 		assertEquals("Size must be 2", 2, list.getSize());
 		
 		// Liste non vide, index taille - 1
 		list.removeAt(list.getSize()-1);
-		assertEquals("Last element must be arrayB", arrayB, list.getAt(list.getSize()-1));
+		assertEquals("Last element must be arrayB", setB, list.getAt(list.getSize()-1));
 		// Size should now be one less
 		assertEquals("Size must be 1", 1, list.getSize());
 		
 		// Liste non vide, index ok
-		list.add(arrayA);
-		list.add(arrayD);
-		list.add(arrayC);
+		list.add(setA);
+		list.add(setD);
+		list.add(setC);
 		list.removeAt(2);
 		// Size should now be 2 more
 		assertEquals("Size must be 3", 3, list.getSize());
@@ -141,29 +161,29 @@ public class MyListTest {
 	
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void testSetAtException() {
-		// Liste non vide, index superieur à la taille
-		list.setAt(arrayD,list.getSize()+1);
+		// Liste non vide, index superieur ÔøΩ la taille
+		list.setAt(setD,list.getSize()+1);
 	}
 	
 	// On devrait nous occuper du negatif??
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void testSetAtNegativ() {
 		// Liste non vide, index negatif
-		list.setAt(arrayD,-1);
+		list.setAt(setD,-1);
 	}
 	
 	@Test
 	public void testSetAt() {
 		// Liste non vide, element non vide, premier de la liste
-		list.setAt(arrayD,0);
-		assertEquals("First element must be arrayD", arrayD, list.getAt(0));
+		list.setAt(setD,0);
+		assertEquals("First element must be arrayD", setD, list.getAt(0));
 		// Size shouldn't change
 		assertEquals("Size must be 3", 3, list.getSize());
 		
 		// Liste non vide, element vide, dernier de la liste
-		arrayA.clear();
-		list.setAt(arrayA,list.getSize()-1);
-		assertEquals("Last element must be arrayA", arrayA, list.getAt(list.getSize()-1));
+		setA.clear();
+		list.setAt(setA,list.getSize()-1);
+		assertEquals("Last element must be arrayA", setA, list.getAt(list.getSize()-1));
 		
 		// Size shouldn't change
 		assertEquals("Size must be 3", 3, list.getSize());
@@ -183,18 +203,18 @@ public class MyListTest {
 	
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void testGetAtNegativ() {
-		// Liste non vide, index négatif
+		// Liste non vide, index nÔøΩgatif
 		list.getAt(-1);
 	}
 	
 	@Test
 	public void testGetAt() {
 		// Liste non vide, index nul
-		assertEquals("First element must be arrayA", arrayA, list.getAt(0));
+		assertEquals("First element must be arrayA", setA, list.getAt(0));
 		// Liste non vide, index ok
-		assertEquals("Second element must be arrayB", arrayB, list.getAt(1));
+		assertEquals("Second element must be arrayB", setB, list.getAt(1));
 		// Liste non vide, index taille - 1
-		assertEquals("Last element must be arrayC", arrayC, list.getAt(list.getSize()-1));
+		assertEquals("Last element must be arrayC", setC, list.getAt(list.getSize()-1));
 	}
 	
 	@Test
@@ -215,5 +235,4 @@ public class MyListTest {
 		list.reset();
 		assertEquals("List must be empty", 0, list.getSize());
 	}
-
 }

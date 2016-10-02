@@ -182,19 +182,6 @@ public class MyListTest {
 		}
 	}
 
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testSetAtException() {
-		// Liste non vide, index superieur � la taille
-		list.setAt(setD,list.getSize()+1);
-	}
-	
-	// On devrait nous occuper du negatif??
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testSetAtNegativ() {
-		// Liste non vide, index negatif
-		list.setAt(setD,-1);
-	}
-	
    /*
 	* Tests MyList.setAt
 	* A1: Index < 0

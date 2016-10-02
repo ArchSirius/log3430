@@ -1,64 +1,72 @@
 package main;
 
-import static org.junit.Assert.*;
-
+import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ListeChaineeTest {
 
 	private ListeChaineeImpl listeChainee;
-	private MyListImpl list;
-	// First value 
-	private ArrayList<Object> val1;
-	// Second value
-	private ArrayList<Object> val2;
-	// Result
-	private ArrayList<Object> result;
-	
-	@BeforeClass
-	public void InitialSetUp(){
-		listeChainee = new ListeChaineeImpl();
-		list = new MyListImpl();
-		val1 = new ArrayList<Object>();
-		val2 = new ArrayList<Object>();
-		result = new ArrayList<Object>();
-	}
-	
+	private ArrayList<Object> leftSet;
+	private ArrayList<Object> rightSet;
+
 	@Before
-	public void cleanUp(){
-		list.reset();
-		val1.clear();
-		val2.clear();
-		result.clear();
+	public void setUp(){
+		listeChainee = new ListeChaineeImpl();
+		leftSet = new ArrayList<Object>();
+		leftSet.add(-4);
+		leftSet.add(2);
+		leftSet.add(15);
+		rightSet = new ArrayList<Object>();
+		rightSet.add(-27);
+		rightSet.add(2);
+		rightSet.add(11);
+		rightSet.add(325);
 	}
 
+   /*
+	* Tests ListeChainee.build
+	* A1: union
+	* A2: intersection
+	* A3: difference
+	* A4: symDifference
+	* A5: isSubset
+	* A6: isSuperset
+	* A7: invalid value
+	*/
 	@Test
-	public void testUnion() throws Exception{
-		val1.add(15);
-		val1.add(2);
-		val1.add(-4);
-		
-		val2.add(-27);
-		val2.add(2);
-		val2.add(11);
-		val2.add(325);
-		
-		result.add(15);
-		result.add(2);
-		result.add(-4);
-		result.add(-27);
-		result.add(11);
-		result.add(325);
-		
-		list.add(val1);
-		list.add(val2);
-		list.add(result);
-		
-		assertEquals("The union of {15,2,-4} and {-27,2,11,325} must be {15,2,-4,-27,11,325}", list, listeChainee.build("union",val1,val2));
-	}
+	public void testBuild() throws Exception {
+		// A1: union
+		assertEquals(3, listeChainee.build("union", leftSet, rightSet).getSize());
 
+		// A2: intersection
+		assertEquals(3, listeChainee.build("intersection", leftSet, rightSet).getSize());
+
+		// A3: difference
+		assertEquals(3, listeChainee.build("difference", leftSet, rightSet).getSize());
+
+		// A4: symDifference
+		assertEquals(3, listeChainee.build("symDifference", leftSet, rightSet).getSize());
+
+		// A5: isSubset
+		assertEquals(3, listeChainee.build("isSubset", leftSet, rightSet).getSize());
+
+		// A6: isSuperset
+		assertEquals(3, listeChainee.build("isSuperset", leftSet, rightSet).getSize());
+
+		// A7: invalid value
+		try {
+			listeChainee.build("", leftSet, rightSet);
+			fail("Expected IOException");
+		}
+		catch (final IOException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IOException, found " + t.getClass().getName());
+		}
+	}
 }

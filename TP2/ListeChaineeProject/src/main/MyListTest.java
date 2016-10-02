@@ -300,22 +300,28 @@ public class MyListTest {
 		}
 	}
 
+   /*
+	* Tests MyList.getSize
+	*/
 	@Test
 	public void testGetSize() {
-		// Liste non vide
-		assertEquals("List size must be 3", 3, list.getSize());
-		// Liste vide
+		assertEquals("List size should be 3",
+				3, list.getSize());
 		list = new MyListImpl();
-		assertEquals("List must be empty", 0, list.getSize());
+		assertEquals("List size should be 0",
+				0, list.getSize());
 	}
 	
+   /*
+	* Tests MyList.getSize
+	*/
 	@Test
 	public void testReset() {
-		// Liste non vide
 		list.reset();
-		assertEquals("List must be empty", 0, list.getSize());
-		// Liste est deja vide
+		assertEquals("List size should be 0",
+				0, list.getSize());
 		list.reset();
-		assertEquals("List must be empty", 0, list.getSize());
+		assertEquals("List size should be 0",
+				0, list.getSize());
 	}
 }

@@ -241,35 +241,65 @@ public class MyListTest {
 			fail("Expected IndexOutOfBoundsException");
 		}
 	}
-	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testGetAtException() {
-		// Liste non vide, index > taille
-		list.getAt(list.getSize()+1);
-	}
-	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testGetAtExceptionAtSize() {
-		// Liste non vide, index taille
-		list.getAt(list.getSize());
-	}
-	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testGetAtNegativ() {
-		// Liste non vide, index n�gatif
-		list.getAt(-1);
-	}
-	
+
+   /*
+	* Tests MyList.getAt
+	* A1: Index < 0
+	* A2: Index = 0
+	* A3: 0 < Index < list.size
+	* A4: Index = list.size
+	* A5: Index > list.size
+	*
+	* A[1,4-5] should throw IndexOutOfBoundsException
+	* A[2-4]   should set
+	*/
 	@Test
 	public void testGetAt() {
-		// Liste non vide, index nul
-		assertEquals("First element must be arrayA", setA, list.getAt(0));
-		// Liste non vide, index ok
-		assertEquals("Second element must be arrayB", setB, list.getAt(1));
-		// Liste non vide, index taille - 1
-		assertEquals("Last element must be arrayC", setC, list.getAt(list.getSize()-1));
+		// A2: Index = 0
+		assertEquals("First element should be setA",
+				setA, list.getAt(0));
+
+		// A3: 0 < Index < list.size
+		assertEquals("Last element should be getC",
+				setC, list.getAt(2));
+
+		// A4: Index = list.size
+		try {
+			list.getAt(3);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
+
+		// A5: Index > list.size
+		try {
+			list.getAt(4);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
+
+		// A1: Index < 0
+		try {
+			list.getAt(-1);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
 	}
-	
+
 	@Test
 	public void testGetSize() {
 		// Liste non vide

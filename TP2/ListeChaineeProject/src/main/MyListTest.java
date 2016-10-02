@@ -122,41 +122,64 @@ public class MyListTest {
 				setC, list.getAt(0));
 	}
 
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testRemoveAtException() {
-		// Liste non vide, index > taille
-		list.removeAt(list.getSize()+1);
-	}
-	
-	// On devrait nous occuper du negatif??
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testRemoveAtNegativ() {
-		// Liste non vide, index n�gatif
-		list.removeAt(-1);
-	}
-	
+   /*
+	* Tests MyList.removeAt
+	* A1: Index < 0
+	* A2: Index = 0
+	* A3: 0 < Index < list.size
+	* A4: Index = list.size
+	* A5: Index > list.size
+	*
+	* A[1,4-5] should throw IndexOutOfBoundsException
+	* A[2-4]   should remove 1
+	*/
 	@Test
 	public void testRemoveAt() {
-		// Liste non vide, index nul 
+		// A3: 0 < Index < list.size
+		list.removeAt(1);
+		assertEquals("First element should be setA",
+				setA, list.getAt(0));
+
+		// A2: Index = 0
 		list.removeAt(0);
-		assertEquals("First element must be arrayB", setB, list.getAt(0));
-		// Size should now be one less
-		assertEquals("Size must be 2", 2, list.getSize());
-		
-		// Liste non vide, index taille - 1
-		list.removeAt(list.getSize()-1);
-		assertEquals("Last element must be arrayB", setB, list.getAt(list.getSize()-1));
-		// Size should now be one less
-		assertEquals("Size must be 1", 1, list.getSize());
-		
-		// Liste non vide, index ok
-		list.add(setA);
-		list.add(setD);
-		list.add(setC);
-		list.removeAt(2);
-		// Size should now be 2 more
-		assertEquals("Size must be 3", 3, list.getSize());
-		
+		assertEquals("First element should be setC",
+				setC, list.getAt(0));
+
+		// A4: Index = list.size
+		try {
+			list.removeAt(2);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
+
+		// A5: Index > list.size
+		try {
+			list.removeAt(3);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
+
+		// A1: Index < 0
+		try {
+			list.removeAt(-1);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
 	}
 	
 	@Test(expected = ArrayIndexOutOfBoundsException.class)

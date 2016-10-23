@@ -116,6 +116,7 @@ public class MyListTest {
 	
 	@Test
 	public void testRemoveItemA2B2() {
+		list.removeItem(setA);
 		// A2B2: Non empty list with doubles, remove non existing set
 		list.add(setB);
 		list.removeItem(setD);
@@ -125,7 +126,8 @@ public class MyListTest {
 	
 	@Test
 	public void testRemoveItemA3B2() {
-
+		list.removeItem(setA);
+		list.add(setB);
 		// A3B2: Non empty list with doubles, remove existing set
 		list.removeItem(setB);
 		assertEquals("Size should be 1",

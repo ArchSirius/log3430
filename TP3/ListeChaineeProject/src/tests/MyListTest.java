@@ -135,6 +135,19 @@ public class MyListTest {
 		assertEquals("First element should be setC",
 				setC, list.getAt(0));
 	}
+	
+	/*
+	* Tests MyList.removeItem
+	* Test en boite blanche pour couvrir toutes les branches
+	* Retrait du tout dernier élément de la liste
+	*/
+	@Test
+	public void testRemoveItemLast() {
+		// Remove last item from the list
+		list.removeItem(setC);
+		assertEquals("Size should be 2",
+				2, list.getSize());
+	}
 
    /*
 	* Tests MyList.removeAt

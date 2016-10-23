@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MyListTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">tests (Oct 23, 2016 5:05:36 PM)</a> &gt; <a href="../../index.html" class="el_group">ListeChaineeProject</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">MyListTest.java</span></div><h1>MyListTest.java</h1><pre class="source lang-java linenums">package tests;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MyListTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">tests (Oct 23, 2016 5:26:28 PM)</a> &gt; <a href="../../index.html" class="el_group">ListeChaineeProject</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">MyListTest.java</span></div><h1>MyListTest.java</h1><pre class="source lang-java linenums">package tests;
 
 import java.util.ArrayList;
 
@@ -161,53 +161,121 @@ import main.MyListImpl;
 	* A[2-4]   should remove 1
 	*/
 	@Test
-	public void testRemoveAt() {
+	public void testRemoveAtA3() {
 		// A3: 0 &lt; Index &lt; list.size
 <span class="fc" id="L166">		list.removeAt(1);</span>
 <span class="fc" id="L167">		assertEquals(&quot;First element should be setA&quot;,</span>
 <span class="fc" id="L168">				setA, list.getAt(0));</span>
-
+<span class="fc" id="L169">	}</span>
+	
+	@Test
+	public void testRemoveAtA2() {
+<span class="fc" id="L173">		list.removeAt(1);</span>
 		// A2: Index = 0
-<span class="fc" id="L171">		list.removeAt(0);</span>
-<span class="fc" id="L172">		assertEquals(&quot;First element should be setC&quot;,</span>
-<span class="fc" id="L173">				setC, list.getAt(0));</span>
-
+<span class="fc" id="L175">		list.removeAt(0);</span>
+<span class="fc" id="L176">		assertEquals(&quot;First element should be setC&quot;,</span>
+<span class="fc" id="L177">				setC, list.getAt(0));	</span>
+<span class="fc" id="L178">	}</span>
+	
+	@Test
+	public void testRemoveAtA4() {
+<span class="fc" id="L182">		list.removeAt(1);</span>
+<span class="fc" id="L183">		list.removeAt(0);</span>
 		// A4: Index = list.size
 		try {
-<span class="nc" id="L177">			list.removeAt(2);</span>
-<span class="nc" id="L178">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
-<span class="nc" id="L179">		}</span>
-<span class="fc" id="L180">		catch (final IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L186">			list.removeAt(2);</span>
+<span class="nc" id="L187">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L188">		}</span>
+<span class="fc" id="L189">		catch (final IndexOutOfBoundsException e) {</span>
 			assert true;
 		}
-<span class="nc" id="L183">		catch (final Throwable t) {</span>
-<span class="nc" id="L184">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L192">		catch (final Throwable t) {</span>
+<span class="nc" id="L193">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
 		}
 
 		// A5: Index &gt; list.size
 		try {
-<span class="nc" id="L189">			list.removeAt(3);</span>
-<span class="nc" id="L190">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
-<span class="nc" id="L191">		}</span>
-<span class="fc" id="L192">		catch (final IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L198">			list.removeAt(3);</span>
+<span class="nc" id="L199">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L200">		}</span>
+<span class="fc" id="L201">		catch (final IndexOutOfBoundsException e) {</span>
 			assert true;
 		}
-<span class="nc" id="L195">		catch (final Throwable t) {</span>
-<span class="nc" id="L196">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L204">		catch (final Throwable t) {</span>
+<span class="nc" id="L205">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
 		}
 
 		// A1: Index &lt; 0
 		try {
-<span class="nc" id="L201">			list.removeAt(-1);</span>
-<span class="nc" id="L202">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
-<span class="nc" id="L203">		}</span>
-<span class="nc" id="L204">		catch (final IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L210">			list.removeAt(-1);</span>
+<span class="nc" id="L211">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L212">		}</span>
+<span class="nc" id="L213">		catch (final IndexOutOfBoundsException e) {</span>
 			assert true;
 		}
-<span class="fc" id="L207">		catch (final Throwable t) {</span>
-<span class="nc" id="L208">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="fc" id="L216">		catch (final Throwable t) {</span>
+<span class="nc" id="L217">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
 		}
-<span class="nc" id="L210">	}</span>
+<span class="nc" id="L219">	}</span>
+	
+	@Test
+	public void testRemoveAtA5() {
+<span class="fc" id="L223">		list.removeAt(1);</span>
+<span class="fc" id="L224">		list.removeAt(0);</span>
+		// A5: Index &gt; list.size
+		try {
+<span class="nc" id="L227">			list.removeAt(3);</span>
+<span class="nc" id="L228">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L229">		}</span>
+<span class="fc" id="L230">		catch (final IndexOutOfBoundsException e) {</span>
+			assert true;
+		}
+<span class="nc" id="L233">		catch (final Throwable t) {</span>
+<span class="nc" id="L234">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+		}
+
+		// A1: Index &lt; 0
+		try {
+<span class="nc" id="L239">			list.removeAt(-1);</span>
+<span class="nc" id="L240">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L241">		}</span>
+<span class="nc" id="L242">		catch (final IndexOutOfBoundsException e) {</span>
+			assert true;
+		}
+<span class="fc" id="L245">		catch (final Throwable t) {</span>
+<span class="nc" id="L246">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+		}
+<span class="nc" id="L248">	}</span>
+	
+	@Test
+	public void testRemoveAtA1() {
+<span class="fc" id="L252">		list.removeAt(1);</span>
+<span class="fc" id="L253">		list.removeAt(0);</span>
+		// A1: Index &lt; 0
+		try {
+<span class="nc" id="L256">			list.removeAt(-1);</span>
+<span class="nc" id="L257">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L258">		}</span>
+<span class="nc" id="L259">		catch (final IndexOutOfBoundsException e) {</span>
+			assert true;
+		}
+<span class="fc" id="L262">		catch (final Throwable t) {</span>
+<span class="nc" id="L263">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+		}
+<span class="nc" id="L265">	}</span>
+	
+	/*
+	* Tests MyList.removeAt
+	* Test en boite blanche pour couvrir toutes les branches
+	* Retrait d'un élément à l'intérieur de la liste, mais qui n'est pas une extrémité
+	*/
+	@Test
+	public void testRemoveAtMiddle() {
+<span class="fc" id="L274">		list.add(setD);</span>
+<span class="fc" id="L275">		list.removeAt(2);</span>
+<span class="fc" id="L276">		assertEquals(&quot;List should contain 3 elements&quot;,</span>
+<span class="fc" id="L277">				3, list.getSize());</span>
+<span class="fc" id="L278">	}</span>
 
    /*
 	* Tests MyList.setAt
@@ -223,51 +291,51 @@ import main.MyListImpl;
 	@Test
 	public void testSetAt() {
 		// A2: Index = 0
-<span class="fc" id="L226">		list.setAt(setD, 0);</span>
-<span class="fc" id="L227">		assertEquals(&quot;First element should be setD&quot;,</span>
-<span class="fc" id="L228">				setD, list.getAt(0));</span>
+<span class="fc" id="L294">		list.setAt(setD, 0);</span>
+<span class="fc" id="L295">		assertEquals(&quot;First element should be setD&quot;,</span>
+<span class="fc" id="L296">				setD, list.getAt(0));</span>
 
 		// A3: 0 &lt; Index &lt; list.size
-<span class="fc" id="L231">		list.setAt(setD, 2);</span>
-<span class="fc" id="L232">		assertEquals(&quot;Last element should be setD&quot;,</span>
-<span class="fc" id="L233">				setD, list.getAt(2));</span>
+<span class="fc" id="L299">		list.setAt(setD, 2);</span>
+<span class="fc" id="L300">		assertEquals(&quot;Last element should be setD&quot;,</span>
+<span class="fc" id="L301">				setD, list.getAt(2));</span>
 
 		// A4: Index = list.size
 		try {
-<span class="nc" id="L237">			list.setAt(setD, 3);</span>
-<span class="nc" id="L238">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
-<span class="nc" id="L239">		}</span>
-<span class="fc" id="L240">		catch (final IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L305">			list.setAt(setD, 3);</span>
+<span class="nc" id="L306">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L307">		}</span>
+<span class="fc" id="L308">		catch (final IndexOutOfBoundsException e) {</span>
 			assert true;
 		}
-<span class="nc" id="L243">		catch (final Throwable t) {</span>
-<span class="nc" id="L244">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L311">		catch (final Throwable t) {</span>
+<span class="nc" id="L312">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
 		}
 
 		// A5: Index &gt; list.size
 		try {
-<span class="nc" id="L249">			list.setAt(setD, 4);</span>
-<span class="nc" id="L250">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
-<span class="nc" id="L251">		}</span>
-<span class="fc" id="L252">		catch (final IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L317">			list.setAt(setD, 4);</span>
+<span class="nc" id="L318">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L319">		}</span>
+<span class="fc" id="L320">		catch (final IndexOutOfBoundsException e) {</span>
 			assert true;
 		}
-<span class="nc" id="L255">		catch (final Throwable t) {</span>
-<span class="nc" id="L256">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L323">		catch (final Throwable t) {</span>
+<span class="nc" id="L324">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
 		}
 
 		// A1: Index &lt; 0
 		try {
-<span class="fc" id="L261">			list.setAt(setD, -1);</span>
-<span class="nc" id="L262">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
-<span class="nc" id="L263">		}</span>
-<span class="nc" id="L264">		catch (final IndexOutOfBoundsException e) {</span>
+<span class="fc" id="L329">			list.setAt(setD, -1);</span>
+<span class="nc" id="L330">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L331">		}</span>
+<span class="nc" id="L332">		catch (final IndexOutOfBoundsException e) {</span>
 			assert true;
 		}
-<span class="fc" id="L267">		catch (final Throwable t) {</span>
-<span class="nc" id="L268">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="fc" id="L335">		catch (final Throwable t) {</span>
+<span class="nc" id="L336">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
 		}
-<span class="nc" id="L270">	}</span>
+<span class="nc" id="L338">	}</span>
 
    /*
 	* Tests MyList.getAt
@@ -283,73 +351,73 @@ import main.MyListImpl;
 	@Test
 	public void testGetAt() {
 		// A2: Index = 0
-<span class="fc" id="L286">		assertEquals(&quot;First element should be setA&quot;,</span>
-<span class="fc" id="L287">				setA, list.getAt(0));</span>
+<span class="fc" id="L354">		assertEquals(&quot;First element should be setA&quot;,</span>
+<span class="fc" id="L355">				setA, list.getAt(0));</span>
 
 		// A3: 0 &lt; Index &lt; list.size
-<span class="fc" id="L290">		assertEquals(&quot;Last element should be getC&quot;,</span>
-<span class="fc" id="L291">				setC, list.getAt(2));</span>
+<span class="fc" id="L358">		assertEquals(&quot;Last element should be getC&quot;,</span>
+<span class="fc" id="L359">				setC, list.getAt(2));</span>
 
 		// A4: Index = list.size
 		try {
-<span class="nc" id="L295">			list.getAt(3);</span>
-<span class="nc" id="L296">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
-<span class="nc" id="L297">		}</span>
-<span class="fc" id="L298">		catch (final IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L363">			list.getAt(3);</span>
+<span class="nc" id="L364">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L365">		}</span>
+<span class="fc" id="L366">		catch (final IndexOutOfBoundsException e) {</span>
 			assert true;
 		}
-<span class="nc" id="L301">		catch (final Throwable t) {</span>
-<span class="nc" id="L302">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L369">		catch (final Throwable t) {</span>
+<span class="nc" id="L370">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
 		}
 
 		// A5: Index &gt; list.size
 		try {
-<span class="nc" id="L307">			list.getAt(4);</span>
-<span class="nc" id="L308">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
-<span class="nc" id="L309">		}</span>
-<span class="fc" id="L310">		catch (final IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L375">			list.getAt(4);</span>
+<span class="nc" id="L376">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L377">		}</span>
+<span class="fc" id="L378">		catch (final IndexOutOfBoundsException e) {</span>
 			assert true;
 		}
-<span class="nc" id="L313">		catch (final Throwable t) {</span>
-<span class="nc" id="L314">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L381">		catch (final Throwable t) {</span>
+<span class="nc" id="L382">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
 		}
 
 		// A1: Index &lt; 0
 		try {
-<span class="fc" id="L319">			list.getAt(-1);</span>
-<span class="nc" id="L320">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
-<span class="nc" id="L321">		}</span>
-<span class="nc" id="L322">		catch (final IndexOutOfBoundsException e) {</span>
+<span class="fc" id="L387">			list.getAt(-1);</span>
+<span class="nc" id="L388">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L389">		}</span>
+<span class="nc" id="L390">		catch (final IndexOutOfBoundsException e) {</span>
 			assert true;
 		}
-<span class="fc" id="L325">		catch (final Throwable t) {</span>
-<span class="nc" id="L326">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="fc" id="L393">		catch (final Throwable t) {</span>
+<span class="nc" id="L394">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
 		}
-<span class="nc" id="L328">	}</span>
+<span class="nc" id="L396">	}</span>
 
    /*
 	* Tests MyList.getSize
 	*/
 	@Test
 	public void testGetSize() {
-<span class="fc" id="L335">		assertEquals(&quot;List size should be 3&quot;,</span>
-<span class="fc" id="L336">				3, list.getSize());</span>
-<span class="fc" id="L337">		list = new MyListImpl();</span>
-<span class="fc" id="L338">		assertEquals(&quot;List size should be 0&quot;,</span>
-<span class="fc" id="L339">				0, list.getSize());</span>
-<span class="fc" id="L340">	}</span>
+<span class="fc" id="L403">		assertEquals(&quot;List size should be 3&quot;,</span>
+<span class="fc" id="L404">				3, list.getSize());</span>
+<span class="fc" id="L405">		list = new MyListImpl();</span>
+<span class="fc" id="L406">		assertEquals(&quot;List size should be 0&quot;,</span>
+<span class="fc" id="L407">				0, list.getSize());</span>
+<span class="fc" id="L408">	}</span>
 	
    /*
 	* Tests MyList.getSize
 	*/
 	@Test
 	public void testReset() {
-<span class="fc" id="L347">		list.reset();</span>
-<span class="fc" id="L348">		assertEquals(&quot;List size should be 0&quot;,</span>
-<span class="fc" id="L349">				0, list.getSize());</span>
-<span class="fc" id="L350">		list.reset();</span>
-<span class="fc" id="L351">		assertEquals(&quot;List size should be 0&quot;,</span>
-<span class="fc" id="L352">				0, list.getSize());</span>
-<span class="fc" id="L353">	}</span>
+<span class="fc" id="L415">		list.reset();</span>
+<span class="fc" id="L416">		assertEquals(&quot;List size should be 0&quot;,</span>
+<span class="fc" id="L417">				0, list.getSize());</span>
+<span class="fc" id="L418">		list.reset();</span>
+<span class="fc" id="L419">		assertEquals(&quot;List size should be 0&quot;,</span>
+<span class="fc" id="L420">				0, list.getSize());</span>
+<span class="fc" id="L421">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>tests (Oct 23, 2016 5:05:36 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>tests (Oct 23, 2016 5:26:28 PM)</div></body></html>

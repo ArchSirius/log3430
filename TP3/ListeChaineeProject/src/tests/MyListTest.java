@@ -97,24 +97,34 @@ public class MyListTest {
 	* A3     B2 should remove N
 	*/
 	@Test
-	public void testRemoveItem() {
+	public void testRemoveItemA1() {
 		// A1: Non empty list without doubles, remove non existing set
 		list.removeItem(setD);
 		assertEquals("Size should be 3",
 				3, list.getSize());
-
+	}
+	
+	@Test
+	public void testRemoveItemA2B1() {
 		// A2B1: Non empty list without doubles, remove existing set
 		list.removeItem(setA);
 		assertEquals("Size should be 2",
 				2, list.getSize());
 		assertEquals("First element should be setB",
 				setB, list.getAt(0));
-
+	}
+	
+	@Test
+	public void testRemoveItemA2B2() {
 		// A2B2: Non empty list with doubles, remove non existing set
 		list.add(setB);
 		list.removeItem(setD);
 		assertEquals("Size should be 3",
 				3, list.getSize());
+	}
+	
+	@Test
+	public void testRemoveItemA3B2() {
 
 		// A3B2: Non empty list with doubles, remove existing set
 		list.removeItem(setB);

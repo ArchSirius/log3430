@@ -161,17 +161,26 @@ public class MyListTest {
 	* A[2-4]   should remove 1
 	*/
 	@Test
-	public void testRemoveAt() {
+	public void testRemoveAtA3() {
 		// A3: 0 < Index < list.size
 		list.removeAt(1);
 		assertEquals("First element should be setA",
 				setA, list.getAt(0));
-
+	}
+	
+	@Test
+	public void testRemoveAtA2() {
+		list.removeAt(1);
 		// A2: Index = 0
 		list.removeAt(0);
 		assertEquals("First element should be setC",
-				setC, list.getAt(0));
-
+				setC, list.getAt(0));	
+	}
+	
+	@Test
+	public void testRemoveAtA4() {
+		list.removeAt(1);
+		list.removeAt(0);
 		// A4: Index = list.size
 		try {
 			list.removeAt(2);
@@ -207,6 +216,65 @@ public class MyListTest {
 		catch (final Throwable t) {
 			fail("Expected IndexOutOfBoundsException");
 		}
+	}
+	
+	@Test
+	public void testRemoveAtA5() {
+		list.removeAt(1);
+		list.removeAt(0);
+		// A5: Index > list.size
+		try {
+			list.removeAt(3);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
+
+		// A1: Index < 0
+		try {
+			list.removeAt(-1);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
+	}
+	
+	@Test
+	public void testRemoveAtA1() {
+		list.removeAt(1);
+		list.removeAt(0);
+		// A1: Index < 0
+		try {
+			list.removeAt(-1);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException");
+		}
+	}
+	
+	/*
+	* Tests MyList.removeAt
+	* Test en boite blanche pour couvrir toutes les branches
+	* Retrait d'un élément à l'intérieur de la liste, mais qui n'est pas une extrémité
+	*/
+	@Test
+	public void testRemoveAtMiddle() {
+		list.add(setD);
+		list.removeAt(2);
+		assertEquals("List should contain 3 elements",
+				3, list.getSize());
 	}
 
    /*

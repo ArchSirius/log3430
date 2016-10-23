@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ListeChaineeTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">tests (Oct 23, 2016 2:38:06 PM)</a> &gt; <a href="../../index.html" class="el_group">ListeChaineeProject</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">ListeChaineeTest.java</span></div><h1>ListeChaineeTest.java</h1><pre class="source lang-java linenums">package tests;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import main.ListeChaineeImpl;
+
+<span class="fc" id="L12">public class ListeChaineeTest {</span>
+
+	private ListeChaineeImpl listeChainee;
+	private ArrayList&lt;Object&gt; leftSet;
+	private ArrayList&lt;Object&gt; rightSet;
+
+	@Before
+	public void setUp(){
+<span class="fc" id="L20">		listeChainee = new ListeChaineeImpl();</span>
+<span class="fc" id="L21">		leftSet = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L22">		leftSet.add(-4);</span>
+<span class="fc" id="L23">		leftSet.add(2);</span>
+<span class="fc" id="L24">		leftSet.add(15);</span>
+<span class="fc" id="L25">		rightSet = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L26">		rightSet.add(-27);</span>
+<span class="fc" id="L27">		rightSet.add(2);</span>
+<span class="fc" id="L28">		rightSet.add(11);</span>
+<span class="fc" id="L29">		rightSet.add(325);</span>
+<span class="fc" id="L30">	}</span>
+
+   /*
+	* Tests ListeChainee.build
+	* A1: union
+	* A2: intersection
+	* A3: difference
+	* A4: symDifference
+	* A5: isSubset
+	* A6: isSuperset
+	* A7: invalid value
+	*/
+	@Test
+	public void testBuild() throws Exception {
+		// A1: union
+<span class="fc" id="L45">		assertEquals(3, listeChainee.build(&quot;union&quot;, leftSet, rightSet).getSize());</span>
+
+		// A2: intersection
+<span class="fc" id="L48">		assertEquals(3, listeChainee.build(&quot;intersection&quot;, leftSet, rightSet).getSize());</span>
+
+		// A3: difference
+<span class="fc" id="L51">		assertEquals(3, listeChainee.build(&quot;difference&quot;, leftSet, rightSet).getSize());</span>
+
+		// A4: symDifference
+<span class="fc" id="L54">		assertEquals(3, listeChainee.build(&quot;symDifference&quot;, leftSet, rightSet).getSize());</span>
+
+		// A5: isSubset
+<span class="fc" id="L57">		assertEquals(3, listeChainee.build(&quot;isSubset&quot;, leftSet, rightSet).getSize());</span>
+
+		// A6: isSuperset
+<span class="fc" id="L60">		assertEquals(3, listeChainee.build(&quot;isSuperset&quot;, leftSet, rightSet).getSize());</span>
+
+		// A7: invalid value
+		try {
+<span class="fc" id="L64">			listeChainee.build(&quot;&quot;, leftSet, rightSet);</span>
+<span class="nc" id="L65">			fail(&quot;Expected IOException&quot;);</span>
+<span class="nc" id="L66">		}</span>
+<span class="nc" id="L67">		catch (final IOException e) {</span>
+			assert true;
+		}
+<span class="fc" id="L70">		catch (final Throwable t) {</span>
+<span class="nc" id="L71">			fail(&quot;Expected IOException, found &quot; + t.getClass().getName());</span>
+		}
+<span class="nc" id="L73">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>tests (Oct 23, 2016 2:38:06 PM)</div></body></html>

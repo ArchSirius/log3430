@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SetCalculatorTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">tests (Oct 23, 2016 2:38:06 PM)</a> &gt; <a href="../../index.html" class="el_group">ListeChaineeProject</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">SetCalculatorTest.java</span></div><h1>SetCalculatorTest.java</h1><pre class="source lang-java linenums">package tests;
+
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import main.SetCalculatorImpl;
+
+<span class="fc" id="L11">public class SetCalculatorTest {</span>
+
+	private SetCalculatorImpl calculator;
+	private ArrayList&lt;Object&gt; leftSet;
+	private ArrayList&lt;Object&gt; rightSet;
+	private ArrayList&lt;Object&gt; resultSet;
+
+	@Before
+	public void setUp(){
+<span class="fc" id="L20">		calculator = new SetCalculatorImpl();</span>
+<span class="fc" id="L21">		leftSet = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L22">		rightSet = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L23">		resultSet = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L24">	}</span>
+
+   /*
+	* Tests SetCalculator.union
+	* 1. Union of two empty sets     : A union B = {} for A = B = {}
+	* 2. Union of two disjoint sets  : A union B = {} for all a in A not in B; A,B != {}
+	* 3. Union of two identical sets : A union B = A  for A = B != {}
+	* 4. Union of two joint sets     : A union B = C  where all c in C are in A or B for A != B; A,B != {}; A,B not disjoint
+	*/
+	@Test
+	public void testUnion() {
+		// A = B = {}
+<span class="fc" id="L36">		assertEquals(&quot;The union of {} and {} should be {}&quot;,</span>
+<span class="fc" id="L37">				resultSet, calculator.union(leftSet, rightSet));</span>
+
+		// A and B are disjoint sets
+<span class="fc" id="L40">		leftSet.add(2);</span>
+<span class="fc" id="L41">		leftSet.add(15);</span>
+<span class="fc" id="L42">		rightSet.add(-27);</span>
+<span class="fc" id="L43">		resultSet.add(2);</span>
+<span class="fc" id="L44">		resultSet.add(15);</span>
+<span class="fc" id="L45">		resultSet.add(-27);</span>
+<span class="fc" id="L46">		assertEquals(&quot;The union of {2, 15} and {-27} should be {-27, 2, 15}&quot;,</span>
+<span class="fc" id="L47">				resultSet, calculator.union(leftSet, rightSet));</span>
+
+		// A = B != {}
+<span class="fc" id="L50">		rightSet.clear();</span>
+<span class="fc" id="L51">		rightSet.add(2);</span>
+<span class="fc" id="L52">		rightSet.add(15);</span>
+<span class="fc" id="L53">		resultSet.clear();</span>
+<span class="fc" id="L54">		resultSet.add(2);</span>
+<span class="fc" id="L55">		resultSet.add(15);</span>
+<span class="fc" id="L56">		assertEquals(&quot;The union of {2, 15} and {2, 15} should be {2, 15}&quot;,</span>
+<span class="fc" id="L57">				resultSet, calculator.union(leftSet, rightSet));</span>
+
+		// A != B joint sets
+<span class="fc" id="L60">		leftSet.add(-4);</span>
+<span class="fc" id="L61">		rightSet.add(11);</span>
+<span class="fc" id="L62">		rightSet.add(325);</span>
+<span class="fc" id="L63">		resultSet.clear();</span>
+<span class="fc" id="L64">		resultSet.add(2);</span>
+<span class="fc" id="L65">		resultSet.add(15);</span>
+<span class="fc" id="L66">		resultSet.add(-4);</span>
+<span class="fc" id="L67">		resultSet.add(11);</span>
+<span class="fc" id="L68">		resultSet.add(325);</span>
+<span class="fc" id="L69">		assertEquals(&quot;The union of {-4, 2, 15} and {2, 11, 15, 325} should be {-4, 2, 11, 15, 325}&quot;,</span>
+<span class="fc" id="L70">				resultSet, calculator.union(leftSet, rightSet));</span>
+<span class="fc" id="L71">	}</span>
+	
+   /*
+	* Tests SetCalculator.intersection
+	* 1. Intersection of two empty sets     : A intersection B = {} for A = B = {}
+	* 2. Intersection of two disjoint sets  : A intersection B = {} for all a in A not in B; A,B != {}
+	* 3. Intersection of two identical sets : A intersection B = A  for A = B != {}
+	* 4. Intersection of two joint sets     : A intersection B = C  where all c in C are in A and B for A != B; A,B != {}; A,B not disjoint
+	*/
+	@Test
+	public void testIntersection() {
+		// A = B = {}
+<span class="fc" id="L83">		assertEquals(&quot;The intersection of {} and {} should be {}&quot;,</span>
+<span class="fc" id="L84">				resultSet, calculator.intersection(leftSet, rightSet));</span>
+
+		// A and B are disjoint sets
+<span class="fc" id="L87">		leftSet.add(15);</span>
+<span class="fc" id="L88">		rightSet.add(-27);</span>
+<span class="fc" id="L89">		rightSet.add(2);</span>
+<span class="fc" id="L90">		assertEquals(&quot;The intersection of {15} and {-27, 2} should be {}&quot;,</span>
+<span class="fc" id="L91">				resultSet, calculator.intersection(leftSet, rightSet));</span>
+
+		// A = B != {}
+<span class="fc" id="L94">		leftSet.add(-27);</span>
+<span class="fc" id="L95">		leftSet.add(2);</span>
+<span class="fc" id="L96">		rightSet.add(15);</span>
+<span class="fc" id="L97">		resultSet.add(15);</span>
+<span class="fc" id="L98">		resultSet.add(-27);</span>
+<span class="fc" id="L99">		resultSet.add(2);</span>
+<span class="fc" id="L100">		assertEquals(&quot;The intersection of {-27, 2, 15} and {-27, 2, 15} should be {-27, 2, 15}&quot;,</span>
+<span class="fc" id="L101">				resultSet, calculator.intersection(leftSet, rightSet));</span>
+
+		// A != B joint sets
+<span class="fc" id="L104">		leftSet.add(-4);</span>
+<span class="fc" id="L105">		rightSet.add(11);</span>
+<span class="fc" id="L106">		rightSet.add(325);</span>
+<span class="fc" id="L107">		assertEquals(&quot;The intersection of {-27, -4, 2, 15} and {-27, 2, 15, 11, 325} should be {-27, 2, 15}&quot;,</span>
+<span class="fc" id="L108">				resultSet, calculator.intersection(leftSet, rightSet));</span>
+<span class="fc" id="L109">	}</span>
+
+   /*
+	* Tests SetCalculator.difference
+	* 1. Difference of two empty sets     : A difference B = {} for A = B = {}
+	* 2. Difference of two identical sets : A difference B = {} for A = B != {}
+	* 3. Difference of two disjoint sets  : A difference B = A  for all a in A not in B; A,B != {}
+	* 4. Difference of two joint sets     : A difference B = C  where all c in C are in A and B for A != B; A,B != {}; A,B not disjoint
+	* 5. Difference of two joint sets     : B difference A = D  where all d in D are in A and B for A != B; A,B != {}; A,B not disjoint
+	*/
+	@Test
+	public void testDifference() {
+		// A = B = {}
+<span class="fc" id="L122">		assertEquals(&quot;The difference of {} and {} should be {}&quot;,</span>
+<span class="fc" id="L123">				resultSet, calculator.difference(leftSet, rightSet));</span>
+
+		// A = B != {}
+<span class="fc" id="L126">		leftSet.add(2);</span>
+<span class="fc" id="L127">		leftSet.add(15);</span>
+<span class="fc" id="L128">		rightSet.add(2);</span>
+<span class="fc" id="L129">		rightSet.add(15);</span>
+<span class="fc" id="L130">		assertEquals(&quot;The difference of {2, 15} and {2, 15} should be {}&quot;,</span>
+<span class="fc" id="L131">				resultSet, calculator.difference(leftSet, rightSet));</span>
+
+		// A and B are disjoint sets
+<span class="fc" id="L134">		rightSet.clear();</span>
+<span class="fc" id="L135">		rightSet.add(325);</span>
+<span class="fc" id="L136">		resultSet.add(2);</span>
+<span class="fc" id="L137">		resultSet.add(15);</span>
+<span class="fc" id="L138">		assertEquals(&quot;The difference of {2, 15} and {325} should be {2, 15}&quot;,</span>
+<span class="fc" id="L139">				resultSet, calculator.difference(leftSet, rightSet));</span>
+
+		// A != B joint sets, LTR
+<span class="fc" id="L142">		leftSet.add(-27);</span>
+<span class="fc" id="L143">		leftSet.add(11);</span>
+<span class="fc" id="L144">		rightSet.add(-27);</span>
+<span class="fc" id="L145">		resultSet.add(11);</span>
+<span class="fc" id="L146">		assertEquals(&quot;The difference of {-27, 2, 11, 15} and {11, 325} should be {-27, 2, 15}&quot;,</span>
+<span class="fc" id="L147">				resultSet, calculator.difference(leftSet, rightSet));</span>
+
+		// A != B joint sets, RTL
+<span class="fc" id="L150">		resultSet.clear();</span>
+<span class="fc" id="L151">		resultSet.add(325);</span>
+<span class="fc" id="L152">		assertEquals(&quot;The difference of {11, 325} and {-27, 2, 11, 15} should be {325}&quot;,</span>
+<span class="fc" id="L153">				resultSet, calculator.difference(rightSet, leftSet));</span>
+<span class="fc" id="L154">	}</span>
+
+   /*
+	* Tests SetCalculator.symDifference
+	* 1. SymDifference of two empty sets     : A symDifference B = {}        for A = B = {}
+	* 2. SymDifference of two disjoint sets  : A symDifference B = A union B for all a in A not in B; A,B != {}
+	* 3. SymDifference of two identical sets : A symDifference B = {}        for A = B != {}
+	* 4. SymDifference of two joint sets     : A symDifference B = C         where all c in C are in A and B for A != B; A,B != {}; A,B not disjoint
+	* 5. SymDifference of two joint sets     : B symDifference A = C         where all c in C are in A and B for A != B; A,B != {}; A,B not disjoint
+	*/
+	@Test
+	public void testSymDifference() {
+		// A = B = {}
+<span class="fc" id="L167">		assertEquals(&quot;The symetric difference of {} and {} should be {}&quot;,</span>
+<span class="fc" id="L168">				resultSet, calculator.symDifference(leftSet, rightSet));</span>
+
+		// A and B are disjoint sets
+<span class="fc" id="L171">		leftSet.add(15);</span>
+<span class="fc" id="L172">		rightSet.add(-4);</span>
+<span class="fc" id="L173">		rightSet.add(2);</span>
+<span class="fc" id="L174">		resultSet.add(15);</span>
+<span class="fc" id="L175">		resultSet.add(-4);</span>
+<span class="fc" id="L176">		resultSet.add(2);</span>
+<span class="fc" id="L177">		assertEquals(&quot;The symetric difference of {15} and {-4, 2} should be {-4, 2, 15}&quot;,</span>
+<span class="fc" id="L178">				resultSet, calculator.symDifference(leftSet, rightSet));</span>
+
+		// A = B != {}
+<span class="fc" id="L181">		leftSet.add(-4);</span>
+<span class="fc" id="L182">		leftSet.add(2);</span>
+<span class="fc" id="L183">		rightSet.add(15);</span>
+<span class="fc" id="L184">		resultSet.clear();</span>
+<span class="fc" id="L185">		assertEquals(&quot;The symetric difference of {-4, 2, 15} and {-4, 2, 15} should be {}&quot;,</span>
+<span class="fc" id="L186">				resultSet, calculator.symDifference(leftSet, rightSet));</span>
+
+		// A != B joint sets, LTR
+<span class="fc" id="L189">		leftSet.add(325);</span>
+<span class="fc" id="L190">		rightSet.add(11);</span>
+<span class="fc" id="L191">		resultSet.add(325);</span>
+<span class="fc" id="L192">		resultSet.add(11);</span>
+<span class="fc" id="L193">		assertEquals(&quot;The symetric difference of {-4, 2, 15, 325} and {-4, 2, 11, 15} should be {11, 325}&quot;,</span>
+<span class="fc" id="L194">				resultSet, calculator.symDifference(leftSet, rightSet));</span>
+
+		// A != B joint sets, RTL
+<span class="fc" id="L197">		resultSet.clear();</span>
+<span class="fc" id="L198">		resultSet.add(11);</span>
+<span class="fc" id="L199">		resultSet.add(325);</span>
+<span class="fc" id="L200">		assertEquals(&quot;The symetric difference of {-4, 2, 11, 15} and {-4, 2, 15, 325} should be {11, 325}&quot;,</span>
+<span class="fc" id="L201">				resultSet, calculator.symDifference(rightSet, leftSet));</span>
+<span class="fc" id="L202">	}</span>
+
+   /*
+	* Tests SetCalculator.isSubset
+	* 1. Two empty sets     : A isSubset B = true  for A = B = {}
+	* 2. Two identical sets : A isSubset B = true  for A = B != {}
+	* 3. Two disjoint sets  : A isSubset B = false for all a in A not in B; A,B != {}
+	* 4. Two joint sets     : A isSubset B = true  for all a in A in B and exists b in B not in A; A,B != {}
+	* 5. Two joint sets     : B isSubset A = false for all a in A in B and exists b in B not in A; A,B != {}
+	*/
+	@Test
+	public void testIsSubset() {
+		// A = B = {}
+<span class="fc" id="L215">		resultSet.add(String.valueOf(true));</span>
+<span class="fc" id="L216">		assertEquals(&quot;{} should be a subset of {}&quot;,</span>
+<span class="fc" id="L217">				resultSet, calculator.isSubset(leftSet, rightSet));</span>
+
+		// A = B != {}
+<span class="fc" id="L220">		leftSet.add(2);</span>
+<span class="fc" id="L221">		leftSet.add(15);</span>
+<span class="fc" id="L222">		rightSet.add(2);</span>
+<span class="fc" id="L223">		rightSet.add(15);</span>
+<span class="fc" id="L224">		assertEquals(&quot;{2, 15} should be a subset of {2, 15}&quot;,</span>
+<span class="fc" id="L225">				resultSet, calculator.isSubset(leftSet, rightSet));</span>
+
+		// A and B are disjoint sets
+<span class="fc" id="L228">		rightSet.clear();</span>
+<span class="fc" id="L229">		rightSet.add(-27);</span>
+<span class="fc" id="L230">		rightSet.add(325);</span>
+<span class="fc" id="L231">		resultSet.clear();</span>
+<span class="fc" id="L232">		resultSet.add(String.valueOf(false));</span>
+<span class="fc" id="L233">		assertEquals(&quot;{2, 15} should not be a subset of {-27, 325}&quot;,</span>
+<span class="fc" id="L234">				resultSet, calculator.isSubset(leftSet, rightSet));</span>
+
+		// A != B joint sets, LTR
+<span class="fc" id="L237">		rightSet.add(2);</span>
+<span class="fc" id="L238">		rightSet.add(15);</span>
+<span class="fc" id="L239">		resultSet.clear();</span>
+<span class="fc" id="L240">		resultSet.add(String.valueOf(true));</span>
+<span class="fc" id="L241">		assertEquals(&quot;{2, 15} should be a subset of {-27, 2, 15, 325}&quot;,</span>
+<span class="fc" id="L242">				resultSet, calculator.isSubset(leftSet, rightSet));</span>
+
+		// A != B joint sets, RTL
+<span class="fc" id="L245">		resultSet.clear();</span>
+<span class="fc" id="L246">		resultSet.add(String.valueOf(false));</span>
+<span class="fc" id="L247">		assertEquals(&quot;{-27, 2, 15, 325} should not be a subset of {2, 15}&quot;,</span>
+<span class="fc" id="L248">				resultSet, calculator.isSubset(rightSet, leftSet));</span>
+<span class="fc" id="L249">	}</span>
+
+   /*
+	* Tests SetCalculator.isSuperset
+	* 1. Two empty sets     : A isSuperset B = true  for A = B = {}
+	* 2. Two identical sets : A isSuperset B = true  for A = B != {}
+	* 3. Two disjoint sets  : A isSuperset B = false for all a in A not in B; A,B != {}
+	* 4. Two joint sets     : A isSuperset B = true  for exists a in A not in B and all b in B in A; A,B != {}
+	* 5. Two joint sets     : B isSuperset A = false for exists a in A not in B and all b in B in A; A,B != {}
+	*/
+	@Test
+	public void testIsSuperset() {
+		// A = B = {}
+<span class="fc" id="L262">		resultSet.add(String.valueOf(true));</span>
+<span class="fc" id="L263">		assertEquals(&quot;{} should be a superset of {}&quot;,</span>
+<span class="fc" id="L264">				resultSet, calculator.isSuperset(leftSet, rightSet));</span>
+
+		// A = B != {}
+<span class="fc" id="L267">		leftSet.add(-27);</span>
+<span class="fc" id="L268">		leftSet.add(3);</span>
+<span class="fc" id="L269">		rightSet.add(-27);</span>
+<span class="fc" id="L270">		rightSet.add(3);</span>
+<span class="fc" id="L271">		assertEquals(&quot;{-27, 3} should be a superset of {-27, 3}&quot;,</span>
+<span class="fc" id="L272">				resultSet, calculator.isSuperset(leftSet, rightSet));</span>
+
+		// A and B are disjoint sets
+<span class="fc" id="L275">		rightSet.clear();</span>
+<span class="fc" id="L276">		rightSet.add(15);</span>
+<span class="fc" id="L277">		resultSet.clear();</span>
+<span class="fc" id="L278">		resultSet.add(String.valueOf(false));</span>
+<span class="fc" id="L279">		assertEquals(&quot;{-27, 3} should not be a superset of {15}&quot;,</span>
+<span class="fc" id="L280">				resultSet, calculator.isSuperset(leftSet, rightSet));</span>
+
+		// A != B joint sets, LTR
+<span class="fc" id="L283">		rightSet.add(3);</span>
+<span class="fc" id="L284">		leftSet.add(15);</span>
+<span class="fc" id="L285">		resultSet.clear();</span>
+<span class="fc" id="L286">		resultSet.add(String.valueOf(true));</span>
+<span class="fc" id="L287">		assertEquals(&quot;{-27, 3, 15} should be a superset of {3, 15}&quot;,</span>
+<span class="fc" id="L288">				resultSet, calculator.isSuperset(leftSet, rightSet));</span>
+
+		// A != B joint sets, RTL
+<span class="fc" id="L291">		resultSet.clear();</span>
+<span class="fc" id="L292">		resultSet.add(String.valueOf(false));</span>
+<span class="fc" id="L293">		assertEquals(&quot;{3, 15} should not be a superset of {-27, 3, 15}&quot;,</span>
+<span class="fc" id="L294">				resultSet, calculator.isSuperset(rightSet, leftSet));</span>
+<span class="fc" id="L295">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>tests (Oct 23, 2016 2:38:06 PM)</div></body></html>

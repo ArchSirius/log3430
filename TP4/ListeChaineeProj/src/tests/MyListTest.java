@@ -1,10 +1,12 @@
-package main;
+package tests;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import main.MyListImpl;
 
 public class MyListTest {
 
@@ -76,9 +78,16 @@ public class MyListTest {
 		// Empty list
 		list = new MyListImpl();
 		// Remove random item
-		list.removeItem(setA);
-		assertEquals("List should be empty, size should be -1",
-				-1, list.getSize());
+		try {
+			list.removeItem(setA);
+			fail("Expected IndexOutOfBoundsException");
+		}
+		catch (final IndexOutOfBoundsException e) {
+			assert true;
+		}
+		catch (final Throwable t) {
+			fail("Expected IndexOutOfBoundsException, found " + t.getClass());
+		}
 	}
 	
 	/*
@@ -93,8 +102,8 @@ public class MyListTest {
 		list = new MyListImpl();
 		// Reset list
 		list.reset();
-		assertEquals("List should be empty, size should be -1",
-				-1, list.getSize());
+		assertEquals("List should be empty, size should be 0",
+				0, list.getSize());
 	}
 	
 	/*
@@ -189,8 +198,8 @@ public class MyListTest {
 		list.add(setA);
 		// Reset list
 		list.reset();
-		assertEquals("List should be empty, size should be -1",
-				-1, list.getSize());
+		assertEquals("List should be empty, size should be 0",
+				0, list.getSize());
 	}
 	
 	/*
@@ -208,8 +217,8 @@ public class MyListTest {
 		list.add(setA);
 		// Remove the item
 		list.removeAt(0);
-		assertEquals("List should be empty, size should be -1",
-				-1, list.getSize());
+		assertEquals("List should be empty, size should be 0",
+				0, list.getSize());
 	}
 	
 	/*
@@ -227,8 +236,8 @@ public class MyListTest {
 		list.add(setA);
 		// Remove the item
 		list.removeItem(setA);
-		assertEquals("List should be empty, size should be -1",
-				-1, list.getSize());
+		assertEquals("List should be empty, size should be 0",
+				0, list.getSize());
 	}
 	
 	/*
@@ -277,7 +286,7 @@ public class MyListTest {
 			assert true;
 		}
 		catch (final Throwable t) {
-			fail("Expected IndexOutOfBoundsException");
+			fail("Expected IndexOutOfBoundsException, found " + t.getClass());
 		}
 	}
 }

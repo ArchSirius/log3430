@@ -178,9 +178,11 @@ public class MyListTest {
 		// Add an item
 		list.add(setA);
 		// Replace an item 
-		list.setAt(setB,0);
+		list.setAt(setB, 0);
 		assertEquals("List should not be empty, size should be 1",
 				1, list.getSize());
+		assertEquals("Element 0 should be setB",
+				setB, list.getAt(0));
 	}
 	
 	/*

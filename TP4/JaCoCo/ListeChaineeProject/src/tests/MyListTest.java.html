@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MyListTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">MyListTest (Nov 6, 2016 8:23:18 PM)</a> &gt; <a href="../../index.html" class="el_group">ListeChaineeProject</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">MyListTest.java</span></div><h1>MyListTest.java</h1><pre class="source lang-java linenums">package tests;
+
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import main.MyListImpl;
+
+<span class="fc" id="L11">public class MyListTest {</span>
+
+	private MyListImpl list;
+	private ArrayList&lt;Object&gt; setA;
+	private ArrayList&lt;Object&gt; setB;
+
+	@Before
+	public void setUp() {
+		// Create 4 sets
+<span class="fc" id="L20">		setA = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L21">		setB = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L22">		setA.add(1);</span>
+<span class="fc" id="L23">		setB.add(2);</span>
+<span class="fc" id="L24">	}</span>
+	
+	/*
+	* Cas de test 1
+	* Sequence
+	* 	setAt
+	* Oracle : S0,S2
+	*/
+	@Test
+	public void test1(){
+		// Empty list
+<span class="fc" id="L35">		list = new MyListImpl();</span>
+		try {
+<span class="nc" id="L37">			list.setAt(setA, 0);</span>
+<span class="nc" id="L38">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L39">		}</span>
+<span class="fc" id="L40">		catch (final IndexOutOfBoundsException e) {</span>
+			assert true;
+		}
+<span class="nc" id="L43">		catch (final Throwable t) {</span>
+<span class="nc" id="L44">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+		}
+<span class="fc" id="L46">	}</span>
+	
+	/*
+	* Cas de test 2
+	* Sequence
+	* 	removeAt
+	* Oracle : S0,S2
+	*/
+	@Test
+	public void test2(){
+		// Empty list
+<span class="fc" id="L57">		list = new MyListImpl();</span>
+		try {
+<span class="nc" id="L59">			list.removeAt(0);</span>
+<span class="nc" id="L60">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L61">		}</span>
+<span class="fc" id="L62">		catch (final IndexOutOfBoundsException e) {</span>
+			assert true;
+		}
+<span class="nc" id="L65">		catch (final Throwable t) {</span>
+<span class="nc" id="L66">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+		}
+<span class="fc" id="L68">	}</span>
+	
+	/*
+	* Cas de test 3
+	* Sequence
+	* 	removeItem
+	* Oracle : S0,S0
+	*/
+	@Test
+	public void test3(){
+		// Empty list
+<span class="fc" id="L79">		list = new MyListImpl();</span>
+		// Remove random item
+		try {
+<span class="nc" id="L82">			list.removeItem(setA);</span>
+<span class="nc" id="L83">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L84">		}</span>
+<span class="nc" id="L85">		catch (final IndexOutOfBoundsException e) {</span>
+			assert true;
+		}
+<span class="fc" id="L88">		catch (final Throwable t) {</span>
+<span class="nc" id="L89">			fail(&quot;Expected IndexOutOfBoundsException, found &quot; + t.getClass());</span>
+		}
+<span class="nc" id="L91">	}</span>
+	
+	/*
+	* Cas de test 4
+	* Sequence
+	* 	reset
+	* Oracle : S0,S0
+	*/
+	@Test
+	public void test4(){
+		// Empty list
+<span class="fc" id="L102">		list = new MyListImpl();</span>
+		// Reset list
+<span class="fc" id="L104">		list.reset();</span>
+<span class="fc" id="L105">		assertEquals(&quot;List should be empty, size should be 0&quot;,</span>
+<span class="fc" id="L106">				0, list.getSize());</span>
+<span class="fc" id="L107">	}</span>
+	
+	/*
+	* Cas de test 5
+	* Sequence
+	* 	add
+	* Oracle : S0,S1
+	*/
+	@Test
+	public void test5(){
+		// Empty list
+<span class="fc" id="L118">		list = new MyListImpl();</span>
+		// Add item
+<span class="fc" id="L120">		list.add(setA);</span>
+<span class="fc" id="L121">		assertEquals(&quot;List should not be empty, size should be 1&quot;,</span>
+<span class="fc" id="L122">				1, list.getSize());</span>
+<span class="fc" id="L123">	}</span>
+	
+	/*
+	* Cas de test 6
+	* Sequence [avec conditions]
+	* 	add
+	* 	add
+	* 	removeAt [pos&lt;=size &amp;&amp; pos &gt;=0 &amp;&amp; size&gt;0]
+	* Oracle : S0,S1,S1,S1
+	*/
+	@Test
+	public void test6(){
+		// Empty list
+<span class="fc" id="L136">		list = new MyListImpl();</span>
+		// Add 2 items
+<span class="fc" id="L138">		list.add(setA);</span>
+<span class="fc" id="L139">		list.add(setB);</span>
+		// Remove an item
+<span class="fc" id="L141">		list.removeAt(0);</span>
+<span class="fc" id="L142">		assertEquals(&quot;List should not be empty, size should be 1&quot;,</span>
+<span class="fc" id="L143">				1, list.getSize());</span>
+<span class="fc" id="L144">	}</span>
+	
+	/*
+	* Cas de test 7
+	* Sequence
+	* 	add
+	* 	add
+	* 	removeItem [(in &amp;&amp; size&gt;0) || not in]
+	* Oracle : S0,S1,S1,S1
+	*/
+	@Test
+	public void test7(){
+		// Empty list
+<span class="fc" id="L157">		list = new MyListImpl();</span>
+		// Add 2 items
+<span class="fc" id="L159">		list.add(setA);</span>
+<span class="fc" id="L160">		list.add(setB);</span>
+		// Remove an item
+<span class="fc" id="L162">		list.removeItem(setB);</span>
+<span class="fc" id="L163">		assertEquals(&quot;List should not be empty, size should be 1&quot;,</span>
+<span class="fc" id="L164">				1, list.getSize());</span>
+<span class="fc" id="L165">	}</span>
+	
+	/*
+	* Cas de test 8
+	* Sequence [avec conditions]
+	* 	add
+	* 	setAt [pos&lt;= size &amp;&amp; pos&gt;=0] 
+	* Oracle : S0,S1,S1
+	*/
+	@Test
+	public void test8(){
+		// Empty list
+<span class="fc" id="L177">		list = new MyListImpl();</span>
+		// Add an item
+<span class="fc" id="L179">		list.add(setA);</span>
+		// Replace an item 
+<span class="fc" id="L181">		list.setAt(setB, 0);</span>
+<span class="fc" id="L182">		assertEquals(&quot;List should not be empty, size should be 1&quot;,</span>
+<span class="fc" id="L183">				1, list.getSize());</span>
+<span class="fc" id="L184">		assertEquals(&quot;Element 0 should be setB&quot;,</span>
+<span class="fc" id="L185">				setB, list.getAt(0));</span>
+<span class="fc" id="L186">	}</span>
+	
+	/*
+	* Cas de test 9
+	* Sequence
+	* 	add
+	* 	reset
+	* Oracle : S0,S1,S0
+	*/
+	@Test
+	public void test9(){
+		// Empty list
+<span class="fc" id="L198">		list = new MyListImpl();</span>
+		// Add an item
+<span class="fc" id="L200">		list.add(setA);</span>
+		// Reset list
+<span class="fc" id="L202">		list.reset();</span>
+<span class="fc" id="L203">		assertEquals(&quot;List should be empty, size should be 0&quot;,</span>
+<span class="fc" id="L204">				0, list.getSize());</span>
+<span class="fc" id="L205">	}</span>
+	
+	/*
+	* Cas de test 10
+	* Sequence [avec conditions]
+	* 	add
+	* 	removeAt [pos==0 &amp;&amp; size==0]
+	* Oracle : S0,S1,S0
+	*/
+	@Test
+	public void test10(){
+		// Empty list
+<span class="fc" id="L217">		list = new MyListImpl();</span>
+		// Add an item
+<span class="fc" id="L219">		list.add(setA);</span>
+		// Remove the item
+<span class="fc" id="L221">		list.removeAt(0);</span>
+<span class="fc" id="L222">		assertEquals(&quot;List should be empty, size should be 0&quot;,</span>
+<span class="fc" id="L223">				0, list.getSize());</span>
+<span class="fc" id="L224">	}</span>
+	
+	/*
+	* Cas de test 11
+	* Sequence [avec conditions]
+	* 	add
+	* 	removeItem [in &amp;&amp; size==0]
+	* Oracle : S0,S1,S0
+	*/
+	@Test
+	public void test11(){
+		// Empty list
+<span class="fc" id="L236">		list = new MyListImpl();</span>
+		// Add an item
+<span class="fc" id="L238">		list.add(setA);</span>
+		// Remove the item
+<span class="fc" id="L240">		list.removeItem(setA);</span>
+<span class="fc" id="L241">		assertEquals(&quot;List should be empty, size should be 0&quot;,</span>
+<span class="fc" id="L242">				0, list.getSize());</span>
+<span class="fc" id="L243">	}</span>
+	
+	/*
+	* Cas de test 12
+	* Sequence [avec conditions]
+	* 	add
+	* 	setAt [pos&gt;size || pos&lt;0]
+	* Oracle : S0,S1,S2
+	*/
+	@Test
+	public void test12(){
+		// Empty list
+<span class="fc" id="L255">		list = new MyListImpl();</span>
+		// Add an item
+<span class="fc" id="L257">		list.add(setA);</span>
+		try {
+<span class="nc" id="L259">			list.setAt(setB, 2);</span>
+<span class="nc" id="L260">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L261">		}</span>
+<span class="fc" id="L262">		catch (final IndexOutOfBoundsException e) {</span>
+			assert true;
+		}
+<span class="nc" id="L265">		catch (final Throwable t) {</span>
+<span class="nc" id="L266">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+		}
+<span class="fc" id="L268">	}</span>
+	
+	/*
+	* Cas de test 13
+	* Sequence [avec conditions]
+	* 	add
+	* 	removeAt [pos&gt;size || pos&lt;0]
+	* Oracle : S0,S1,S2
+	*/
+	@Test
+	public void test13(){
+		// Empty list
+<span class="fc" id="L280">		list = new MyListImpl();</span>
+		// Add an item
+<span class="fc" id="L282">		list.add(setA);</span>
+		try {
+<span class="nc" id="L284">			list.removeAt(-2);</span>
+<span class="nc" id="L285">			fail(&quot;Expected IndexOutOfBoundsException&quot;);</span>
+<span class="nc" id="L286">		}</span>
+<span class="nc" id="L287">		catch (final IndexOutOfBoundsException e) {</span>
+			assert true;
+		}
+<span class="fc" id="L290">		catch (final Throwable t) {</span>
+<span class="nc" id="L291">			fail(&quot;Expected IndexOutOfBoundsException, found &quot; + t.getClass());</span>
+		}
+<span class="nc" id="L293">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>MyListTest (Nov 6, 2016 8:23:18 PM)</div></body></html>

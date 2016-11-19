@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MyListImpl_testsGetter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">tests (Nov 19, 2016 11:44:06 AM)</a> &gt; <a href="../../index.html" class="el_group">ListeChaineeProject</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">MyListImpl_testsGetter.java</span></div><h1>MyListImpl_testsGetter.java</h1><pre class="source lang-java linenums">package tests;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+import main.MyListImpl;
+
+/****************************************
+ * Tests des &quot;Getter&quot;. Il faut s'assurer de leur exactitude afin 
+ * de valider les tests MaDUM
+ ***************************************/
+<span class="fc" id="L15">public class MyListImpl_testsGetter {</span>
+	private ArrayList&lt;Object&gt; objList;
+	private MyListImpl mli;
+	
+	@Before
+	/*****************************************
+	 *	Methode qui initialise MyListImpl via son constructeur et
+	 *	valide les param�tres initiaux
+	 ****************************************/
+	public void setUp()
+	{
+<span class="fc" id="L26">		objList = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L27">		objList.add(new Integer(1));</span>
+<span class="fc" id="L28">		mli  = new MyListImpl();</span>
+<span class="fc" id="L29">		assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+<span class="fc" id="L30">		assertNull(&quot;La propriete current devrait etre egale a start, et donc a null&quot;, mli.getCurrent());</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">		assertTrue(&quot;La propriete size devrait etre egale a zero.&quot;,mli.getSize() == 0);</span>
+<span class="fc" id="L32">	}</span>
+	
+	
+	
+	
+	
+	@Test
+	/****************************************
+	 * Methode de test pour le Getter de start.
+	 * Sequence : add, removeItem, add, removeAt, add, add, add, removeItem, removeAt, add, add, removeItem, removeAt; 
+	 ***************************************/
+	public void testGetStart() {
+		try {
+<span class="fc" id="L45">			ArrayList&lt;Object&gt; objList1 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L46">			ArrayList&lt;Object&gt; objList2 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L47">			ArrayList&lt;Object&gt; objList3 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L48">			objList1.add(new Integer(5));</span>
+<span class="fc" id="L49">			objList1.add(new Integer(3));</span>
+<span class="fc" id="L50">			objList2.add(new Integer(4));</span>
+<span class="fc" id="L51">			objList2.add(new Integer(12));</span>
+<span class="fc" id="L52">			objList3.add(new Integer(1));</span>
+<span class="fc" id="L53">			mli.add(objList1);</span>
+
+<span class="fc" id="L55">			assertTrue(&quot;La propritete Start devrait etre egale a objList1&quot;,mli.getStart().getContent().equals(objList1));</span>
+<span class="fc" id="L56">			assertNull(&quot;La propriete Next de Start devrait etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="fc" id="L57">			mli.removeItem(objList1);</span>
+<span class="fc" id="L58">			assertNull(&quot;La propriete Start devrait etre egale a null&quot;, mli.getStart());</span>
+<span class="fc" id="L59">			mli.add(objList2);</span>
+<span class="fc" id="L60">			assertTrue(&quot;La propriete Start devrait etre egale a objList2&quot;,mli.getStart().getContent().equals(objList2));</span>
+<span class="fc" id="L61">			assertNull(&quot;La propriete Next de Start devrait etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="fc" id="L62">			mli.removeAt(0);</span>
+<span class="fc" id="L63">			assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+<span class="fc" id="L64">			mli.add(objList3);</span>
+<span class="fc" id="L65">			assertTrue(&quot;La propriete Start devrait etre egale a objList3&quot;,mli.getStart().getContent().equals(objList3));</span>
+<span class="fc" id="L66">			assertNull(&quot;La propriete Next de Start devrait etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="fc" id="L67">			mli.add(objList2);</span>
+<span class="fc" id="L68">			assertTrue(&quot;La propriete Start devrait etre egale a objList3&quot;,mli.getStart().getContent().equals(objList3));</span>
+<span class="fc" id="L69">			assertNotNull(&quot;La propriete Next de Start devrait ne etre pas egale a null&quot;,mli.getStart().getNext());</span>
+<span class="fc" id="L70">			assertTrue(&quot;La propriete Next de Start devrait etre egale a objList2&quot;,mli.getStart().getNext().getContent().equals(objList2));</span>
+<span class="fc" id="L71">			mli.add(objList1);</span>
+<span class="fc" id="L72">			assertTrue(&quot;La propriete Start devrait etre egale a objList3&quot;,mli.getStart().getContent().equals(objList3));</span>
+<span class="fc" id="L73">			assertNotNull(&quot;La propriete Next de Start ne devrait pas etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="fc" id="L74">			assertTrue(&quot;La propriete Next de Start devrait etre egale a objList2&quot;,mli.getStart().getNext().getContent().equals(objList2));</span>
+<span class="fc" id="L75">			mli.removeAt(1);</span>
+<span class="fc" id="L76">			assertTrue(&quot;La propriete Start devrait etre egale a objList3&quot;,mli.getStart().getContent().equals(objList3));</span>
+<span class="fc" id="L77">			assertNotNull(&quot;La propriete Next de Start ne devrait pas etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="fc" id="L78">			assertTrue(&quot;La propriete Next de Start devrait etre egale a objList1&quot;,mli.getStart().getNext().getContent().equals(objList1));</span>
+<span class="fc" id="L79">			mli.removeItem(objList1);</span>
+<span class="fc" id="L80">			assertTrue(&quot;La propriete Start devrait etre egale a objList3&quot;,mli.getStart().getContent().equals(objList3));</span>
+<span class="fc" id="L81">			assertNull(&quot;La propriete Next de Start devrait etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="fc" id="L82">			mli.add(objList2);</span>
+<span class="fc" id="L83">			assertTrue(&quot;La propriete Start devrait etre egale a objList3&quot;,mli.getStart().getContent().equals(objList3));</span>
+<span class="nc" id="L84">			assertNotNull(&quot;La propriete Next de Start ne devrait pas etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="nc" id="L85">			assertTrue(&quot;La propriete Next de Start devrait etre egale a objList2&quot;,mli.getStart().getNext().getContent().equals(objList2));</span>
+<span class="nc" id="L86">			mli.add(objList1);</span>
+<span class="nc" id="L87">			assertTrue(&quot;La propriete Start devrait etre egale a objList3&quot;,mli.getStart().getContent().equals(objList3));</span>
+<span class="nc" id="L88">			assertNotNull(&quot;La propriete Next de Start ne devrait pas etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="nc" id="L89">			assertTrue(&quot;La propriete Next de Start devrait etre egale a objList2&quot;,mli.getStart().getNext().getContent().equals(objList2));</span>
+<span class="nc" id="L90">			mli.removeAt(0);</span>
+<span class="nc" id="L91">			assertTrue(&quot;La propriete Start devrait etre egale a objList2&quot;,mli.getStart().getContent().equals(objList2));</span>
+<span class="nc" id="L92">			assertNotNull(&quot;La propriete Next de Start ne devrait pas etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="nc" id="L93">			assertTrue(&quot;La propriete Next de Start devrait etre egale a objList1&quot;,mli.getStart().getNext().getContent().equals(objList1));</span>
+<span class="nc" id="L94">			mli.removeItem(objList2);</span>
+<span class="nc" id="L95">			assertTrue(&quot;La propriete Start devrait etre egale a objList1&quot;,mli.getStart().getContent().equals(objList1));</span>
+<span class="nc" id="L96">			assertNull(&quot;La propriete Next de Start devrait etre egale a null&quot;,mli.getStart().getNext());</span>
+<span class="nc" id="L97">		} catch (Exception e) {</span>
+<span class="nc" id="L98">			fail(&quot;Il ne devrait pas y avoir d'exception.&quot;);</span>
+		}
+<span class="nc" id="L100">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode de test pour le Getter de size.
+	 * On reutilise la sequence de testGetStart
+	 * Sequence : add, removeItem, add, removeAt, add, add, add, removeItem, removeAt, add, add, removeItem, removeAt; 
+	 ***************************************/
+	public void testGetSize() {
+		try {
+<span class="fc" id="L110">			ArrayList&lt;Object&gt; objList1 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L111">			ArrayList&lt;Object&gt; objList2 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L112">			ArrayList&lt;Object&gt; objList3 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L113">			objList1.add(new Integer(5));</span>
+<span class="fc" id="L114">			objList1.add(new Integer(3));</span>
+<span class="fc" id="L115">			objList2.add(new Integer(4));</span>
+<span class="fc" id="L116">			objList2.add(new Integer(12));</span>
+<span class="fc" id="L117">			objList3.add(new Integer(1));</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 0&quot;,mli.getSize() == 0);</span>
+<span class="fc" id="L119">			mli.add(objList1);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 1&quot;,mli.getSize() == 1);</span>
+<span class="fc" id="L121">			mli.removeItem(objList1);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 0&quot;,mli.getSize() == 0);</span>
+<span class="fc" id="L123">			mli.add(objList2);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 1&quot;,mli.getSize() == 1);</span>
+<span class="fc" id="L125">			mli.removeAt(0);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 0&quot;,mli.getSize() == 0);</span>
+<span class="fc" id="L127">			mli.add(objList3);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 1&quot;,mli.getSize() == 1);</span>
+<span class="fc" id="L129">			mli.add(objList2);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 2&quot;,mli.getSize() == 2);</span>
+<span class="fc" id="L131">			mli.add(objList1);</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 3&quot;,mli.getSize() == 3);</span>
+<span class="fc" id="L133">			mli.removeAt(1);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 2&quot;,mli.getSize() == 2);</span>
+<span class="fc" id="L135">			mli.removeItem(objList1);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 1&quot;,mli.getSize() == 1);</span>
+<span class="fc" id="L137">			mli.add(objList2);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 2&quot;,mli.getSize() == 2);</span>
+<span class="fc" id="L139">			mli.add(objList1);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 3&quot;,mli.getSize() == 3);</span>
+<span class="fc" id="L141">			mli.removeAt(0);</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 2&quot;,mli.getSize() == 2);</span>
+<span class="nc" id="L143">			mli.removeItem(objList2);</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			assertTrue(&quot;La propriete Size devrait etre egale a 1&quot;,mli.getSize() == 1);</span>
+<span class="pc" id="L145">		} catch (Exception e) {</span>
+<span class="nc" id="L146">			fail(&quot;Il ne devrait pas y avoir d'exception.&quot;);</span>
+		}
+<span class="nc" id="L148">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode de test pour le Getter de Current.
+	 * On reutilise la sequence de testGetStart
+	 * Sequence : add, removeItem, add, removeAt, add, add, add, removeItem, removeAt, add, add, removeItem, removeAt; 
+	 ***************************************/
+	public void testGetCurrent() {
+		try {
+<span class="fc" id="L158">			ArrayList&lt;Object&gt; objList1 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L159">			ArrayList&lt;Object&gt; objList2 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L160">			ArrayList&lt;Object&gt; objList3 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L161">			objList1.add(new Integer(5));</span>
+<span class="fc" id="L162">			objList1.add(new Integer(3));</span>
+<span class="fc" id="L163">			objList2.add(new Integer(4));</span>
+<span class="fc" id="L164">			objList2.add(new Integer(12));</span>
+<span class="fc" id="L165">			objList3.add(new Integer(1));</span>
+<span class="fc" id="L166">			mli.add(objList1);</span>
+			//Les Assert Suivant requiert de mettre Elem comme classe publique. Sans quoi, on ne peux pas en voir le contenu, ou le Next.
+<span class="fc" id="L168">			assertTrue(&quot;La propritete Current devrait etre egale a objList1&quot;,mli.getCurrent().getContent().equals(objList1));</span>
+<span class="fc" id="L169">			mli.removeItem(objList1);</span>
+<span class="nc" id="L170">			assertNull(&quot;La propriete Current devrait etre egale a null&quot;, mli.getCurrent());</span>
+<span class="nc" id="L171">			mli.add(objList2);</span>
+<span class="nc" id="L172">			assertTrue(&quot;La propriete Current devrait etre egale a objList2&quot;,mli.getCurrent().getContent().equals(objList2));</span>
+<span class="nc" id="L173">			mli.removeAt(0);</span>
+<span class="nc" id="L174">			assertNull(&quot;La propriete Current devrait etre egale a null&quot;, mli.getCurrent());</span>
+<span class="nc" id="L175">			mli.add(objList3);</span>
+<span class="nc" id="L176">			assertTrue(&quot;La propriete Current devrait etre egale a objList3&quot;,mli.getCurrent().getContent().equals(objList3));</span>
+<span class="nc" id="L177">			mli.add(objList2);</span>
+<span class="nc" id="L178">			assertTrue(&quot;La propriete Current devrait etre egale a objList2&quot;,mli.getCurrent().getContent().equals(objList2));</span>
+<span class="nc" id="L179">			mli.add(objList1);</span>
+<span class="nc" id="L180">			assertTrue(&quot;La propriete Current devrait etre egale a objList1&quot;,mli.getCurrent().getContent().equals(objList1));</span>
+<span class="nc" id="L181">			mli.removeAt(1);</span>
+<span class="nc" id="L182">			assertTrue(&quot;La propriete Current devrait etre egale a objList1&quot;,mli.getCurrent().getContent().equals(objList1));</span>
+<span class="nc" id="L183">			mli.removeItem(objList1);</span>
+<span class="nc" id="L184">			assertTrue(&quot;La propriete Current devrait etre egale a objList3&quot;,mli.getCurrent().getContent().equals(objList3));</span>
+<span class="nc" id="L185">			mli.add(objList2);</span>
+<span class="nc" id="L186">			assertTrue(&quot;La propriete Current devrait etre egale a objList2&quot;,mli.getCurrent().getContent().equals(objList2));</span>
+<span class="nc" id="L187">			mli.add(objList1);</span>
+<span class="nc" id="L188">			assertTrue(&quot;La propriete Current devrait etre egale a objList1&quot;,mli.getCurrent().getContent().equals(objList1));</span>
+<span class="nc" id="L189">			mli.removeAt(0);</span>
+<span class="nc" id="L190">			assertTrue(&quot;La propriete Current devrait etre egale a objList1&quot;,mli.getCurrent().getContent().equals(objList1));</span>
+<span class="nc" id="L191">			mli.removeItem(objList2);</span>
+<span class="nc" id="L192">			assertTrue(&quot;La propriete Current devrait etre egale a objList1&quot;,mli.getCurrent().getContent().equals(objList1));</span>
+<span class="nc" id="L193">		} catch (Exception e) {</span>
+<span class="nc" id="L194">			fail(&quot;Il ne devrait pas y avoir d'exception.&quot;);</span>
+		}
+<span class="nc" id="L196">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>tests (Nov 19, 2016 11:44:06 AM)</div></body></html>

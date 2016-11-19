@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ListeChaineeImpl.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">tests (Nov 19, 2016 11:44:06 AM)</a> &gt; <a href="../../index.html" class="el_group">ListeChaineeProject</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main</a> &gt; <span class="el_source">ListeChaineeImpl.java</span></div><h1>ListeChaineeImpl.java</h1><pre class="source lang-java linenums">/**
+ * @class			: ListeChaineeImpl
+ * @interface		: ListeChainee
+ * @author	 		: Ons mlouki
+ * 					  Ons.mlouki@gmail.com
+ */
+package main;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+<span class="nc" id="L12">public class ListeChaineeImpl implements ListeChainee {</span>
+	
+	public MyList build(String op,ArrayList&lt;Object&gt; val1, ArrayList&lt;Object&gt; val2) throws IOException{
+		
+		
+<span class="nc" id="L17">		StringBuilder chaineContent=new StringBuilder();</span>
+		
+<span class="nc" id="L19">		MyList list = new MyListImpl();	</span>
+		
+<span class="nc" id="L21">		list.add(val1);</span>
+<span class="nc" id="L22">		chaineContent.append(&quot;&quot;+val1);</span>
+			 
+<span class="nc" id="L24">		list.add(val2);</span>
+<span class="nc" id="L25">		chaineContent.append(&quot; &quot;+val2);</span>
+		
+<span class="nc" id="L27">		SetCalculator myCalculator= new SetCalculatorImpl();</span>
+		 
+<span class="nc" id="L29">		 int i=1;</span>
+					
+<span class="nc bnc" id="L31" title="All 19 branches missed.">		switch (op){</span>
+		   case &quot;union&quot;:{
+<span class="nc" id="L33">			   list.add(myCalculator.union(list.getAt(i-1),list.getAt(i)));</span>
+<span class="nc" id="L34">			   i++;</span>
+<span class="nc" id="L35">			   chaineContent.append(&quot; &quot;+list.getAt(i));</span>
+			   
+			   };
+<span class="nc" id="L38">		   break;</span>
+		   case &quot;intersection&quot;:{
+<span class="nc" id="L40">			   list.add(myCalculator.intersection(list.getAt(i-1),list.getAt(i)));</span>
+<span class="nc" id="L41">			   i++;</span>
+<span class="nc" id="L42">			   chaineContent.append(&quot; &quot;+list.getAt(i)); </span>
+			   };
+<span class="nc" id="L44">		   break;</span>
+		   case &quot;difference&quot;:{
+<span class="nc" id="L46">			   list.add(myCalculator.difference(list.getAt(i-1),list.getAt(i)));</span>
+<span class="nc" id="L47">			   i++;</span>
+<span class="nc" id="L48">			   chaineContent.append(&quot; &quot;+list.getAt(i)); </span>
+			   };
+<span class="nc" id="L50">		   break;</span>
+		   case &quot;symDifference&quot;:{
+<span class="nc" id="L52">			   list.add(myCalculator.symDifference(list.getAt(i-1),list.getAt(i)));</span>
+<span class="nc" id="L53">			   i++;</span>
+<span class="nc" id="L54">			   chaineContent.append(&quot; &quot;+list.getAt(i));</span>
+			   };
+<span class="nc" id="L56">		   break;</span>
+		   case &quot;isSubset&quot;:{
+<span class="nc" id="L58">			   list.add(myCalculator.isSubset(list.getAt(i-1),list.getAt(i)));</span>
+<span class="nc" id="L59">			   i++;</span>
+<span class="nc" id="L60">			   chaineContent.append(&quot; &quot;+list.getAt(i)); </span>
+			   };
+<span class="nc" id="L62">		   break; </span>
+		   case &quot;isSuperset&quot;:{
+<span class="nc" id="L64">			   list.add(myCalculator.isSuperset(list.getAt(i-1),list.getAt(i)));</span>
+<span class="nc" id="L65">			   i++;</span>
+<span class="nc" id="L66">			   chaineContent.append(&quot; &quot;+list.getAt(i)); </span>
+			   };
+<span class="nc" id="L68">		   break;</span>
+<span class="nc" id="L69">		   default:System.out.println(&quot;operateur &quot;+op+&quot; non identifié&quot;);</span>
+			   break;
+		}
+		
+<span class="nc" id="L73">		return list;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>tests (Nov 19, 2016 11:44:06 AM)</div></body></html>

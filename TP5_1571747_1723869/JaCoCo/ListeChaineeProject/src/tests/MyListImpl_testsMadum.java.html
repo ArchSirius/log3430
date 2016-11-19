@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MyListImpl_testsMadum.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">tests (Nov 19, 2016 11:44:06 AM)</a> &gt; <a href="../../index.html" class="el_group">ListeChaineeProject</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">MyListImpl_testsMadum.java</span></div><h1>MyListImpl_testsMadum.java</h1><pre class="source lang-java linenums">package tests;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
+import main.MyListImpl;
+
+<span class="fc" id="L12">public class MyListImpl_testsMadum {</span>
+	
+	private ArrayList&lt;Object&gt; objList;
+	
+	private MyListImpl mli;
+	
+	/*****************************************
+	 * Generalisation des tests
+	 ****************************************/
+	
+	private void testReset() {
+<span class="fc" id="L23">		mli.reset();</span>
+<span class="fc" id="L24">		assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+<span class="fc" id="L25">		assertNull(&quot;La propriete current devrait etre egale a start, et donc a null&quot;, mli.getCurrent());</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">		assertTrue(&quot;La propriete size devrait etre egale a zero.&quot;,mli.getSize() == 0);</span>
+<span class="fc" id="L27">	}</span>
+	
+	
+	private void testStartAdd() {
+<span class="fc" id="L31">		mli.add(objList);</span>
+<span class="fc" id="L32">		assertNotNull(&quot;La propriete start devrait pas etre egale a null&quot;, mli.getStart());</span>
+<span class="fc" id="L33">	}</span>
+	
+	private void testSizeAdd() {
+<span class="fc" id="L36">		mli.add(objList);</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">		assertTrue(&quot;La propriete size devrait etre egale a un.&quot;,mli.getSize() == 1);</span>
+<span class="fc" id="L38">	}</span>
+	
+	private void testCurrentAdd() {
+<span class="fc" id="L41">		mli.add(objList);</span>
+<span class="fc" id="L42">		assertNotNull(&quot;La propriete current devrait pas etre egale a null&quot;, mli.getCurrent());</span>
+<span class="fc" id="L43">	}</span>
+	
+	private void testStartRemoveAtSuccess() {
+<span class="fc" id="L46">		mli.removeAt(0);</span>
+<span class="fc" id="L47">		assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+<span class="fc" id="L48">	}</span>
+	
+	private void testSizeRemoveAtSuccess() {
+<span class="fc" id="L51">		mli.removeAt(0);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		assertTrue(&quot;La propriete size devrait etre egale a zero.&quot;,mli.getSize() == 0);</span>
+<span class="fc" id="L53">	}</span>
+	
+	private void testStartRemoveAtFailure() {
+		try
+		{
+<span class="nc" id="L58">			mli.removeAt(0);</span>
+<span class="nc" id="L59">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L60">		}</span>
+<span class="fc" id="L61">		catch (ArrayIndexOutOfBoundsException e) </span>
+		{
+<span class="fc" id="L63">			assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+		}
+<span class="nc" id="L65">		catch(Exception e) </span>
+		{
+<span class="nc" id="L67">			fail(&quot;Ceci devrait lancer une ArrayIndexOutOfBoundsException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+<span class="fc" id="L69">	}</span>
+	
+	private void testSizeRemoveAtFailure() {
+		try
+		{
+<span class="nc" id="L74">			mli.removeAt(0);</span>
+<span class="nc" id="L75">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L76">		}</span>
+<span class="fc" id="L77">		catch (ArrayIndexOutOfBoundsException e) </span>
+		{
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete size devrait etre egale a zero.&quot;,mli.getSize() == 0);</span>
+		}
+<span class="nc" id="L81">		catch(Exception e) </span>
+		{
+<span class="nc" id="L83">			fail(&quot;Ceci devrait lancer une ArrayIndexOutOfBoundsException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+<span class="fc" id="L85">	}</span>
+	
+	private void testStartRemoveItemSuccess() {
+<span class="fc" id="L88">		mli.removeItem(objList);</span>
+<span class="fc" id="L89">		assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+<span class="fc" id="L90">	}</span>
+	
+	private void testSizeRemoveItemSuccess() {
+<span class="fc" id="L93">		mli.removeItem(objList);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		assertTrue(&quot;La propriete size devrait etre egale a zero.&quot;,mli.getSize() == 0);</span>
+<span class="fc" id="L95">	}</span>
+	
+	/*****************************************
+	 * Methode qui teste la suppression d'une entree donnee pour l'attribut Start, dans les cas ou
+	 * il devrait y avoir erreur. 
+	 ****************************************/
+	private void testStartRemoveItemFailure() {
+		try
+		{
+<span class="nc" id="L104">			mli.removeItem(objList);</span>
+<span class="nc" id="L105">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L106">		}</span>
+<span class="fc" id="L107">		catch (NullPointerException e) </span>
+		{
+<span class="fc" id="L109">			assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+		}
+<span class="nc" id="L111">		catch(Exception e) </span>
+		{
+<span class="nc" id="L113">			fail(&quot;Ceci devrait lancer une NullPointerException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+<span class="fc" id="L115">	}</span>
+	
+	/*****************************************
+	 * Methode qui teste la suppression d'une entree donnee pour l'attribut Size, dans les cas ou
+	 * il devrait y avoir erreur. 
+	 ****************************************/
+	private void testSizeRemoveItemFailure() {
+		try
+		{
+<span class="nc" id="L124">			mli.removeItem(objList);</span>
+<span class="nc" id="L125">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L126">		}</span>
+<span class="fc" id="L127">		catch (NullPointerException e) </span>
+		{
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			assertTrue(&quot;La propriete size devrait etre egale a zero.&quot;,mli.getSize() == 0);</span>
+		}
+<span class="nc" id="L131">		catch(Exception e) </span>
+		{
+<span class="nc" id="L133">			fail(&quot;Ceci devrait lancer une NullPointerException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+<span class="fc" id="L135">	}</span>
+	
+	
+	@Before
+	/*****************************************
+	 *	Methode qui initialise MyListImpl via son constructeur et
+	 *	valide les param�tres initiaux
+	 ****************************************/
+	public void setUp()
+	{
+<span class="fc" id="L145">		objList = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L146">		objList.add(new Integer(1));</span>
+<span class="fc" id="L147">		mli  = new MyListImpl();</span>
+<span class="fc" id="L148">		assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+<span class="fc" id="L149">		assertNull(&quot;La propriete current devrait etre egale a start, et donc a null&quot;, mli.getCurrent());</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		assertTrue(&quot;La propriete size devrait etre egale a zero.&quot;,mli.getSize() == 0);</span>
+<span class="fc" id="L151">	}</span>
+	
+	/****************************************
+	 * Tests sur l'attribut Start
+	 ****************************************/
+	
+	@Test
+	/****************************************
+	 * Methode : testStart1()
+	 * Attribut: Start
+	 * Sequence: add, removeAt, removeItem, reset
+	 ****************************************/
+	public void testStart1()
+	{
+<span class="fc" id="L165">		testStartAdd();</span>
+<span class="fc" id="L166">		testStartRemoveAtSuccess();</span>
+<span class="fc" id="L167">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L168">		testReset();</span>
+<span class="fc" id="L169">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart2()
+	 * Attribut: Start
+	 * Sequence: add, removeAt, reset, removeItem
+	 ****************************************/
+	public void testStart2() 
+	{		
+<span class="fc" id="L179">		testStartAdd();</span>
+<span class="fc" id="L180">		testStartRemoveAtSuccess();</span>
+<span class="fc" id="L181">		testReset();</span>
+<span class="fc" id="L182">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L183">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart3()
+	 * Attribut: Start
+	 * Sequence: add, removeItem, removeAt, reset
+	 ****************************************/
+	public void testStart3()
+	{
+<span class="fc" id="L193">		testStartAdd();</span>
+<span class="fc" id="L194">		testStartRemoveItemSuccess();</span>
+<span class="fc" id="L195">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L196">		testReset();</span>
+<span class="fc" id="L197">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart4()
+	 * Attribut: Start
+	 * Sequence: add, removeItem, reset, removeAt
+	 ****************************************/
+	public void testStart4()
+	{
+<span class="fc" id="L207">		testStartAdd();</span>
+<span class="fc" id="L208">		testStartRemoveItemSuccess();</span>
+<span class="fc" id="L209">		testReset();</span>
+<span class="fc" id="L210">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L211">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart5()
+	 * Attribut: Start
+	 * Sequence: add, reset, removeAt, removeItem
+	 ****************************************/
+	public void testStart5()
+	{
+<span class="fc" id="L221">		testStartAdd();</span>
+<span class="fc" id="L222">		testStartRemoveItemSuccess();</span>
+<span class="fc" id="L223">		testReset();</span>
+<span class="fc" id="L224">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L225">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart6()
+	 * Attribut: Start
+	 * Sequence: add, reset, removeItem, removeAt
+	 ****************************************/
+	public void testStart6()
+	{
+<span class="fc" id="L235">		testStartAdd();</span>
+<span class="fc" id="L236">		testReset();</span>
+<span class="fc" id="L237">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L238">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L239">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart7()
+	 * Attribut: Start
+	 * Sequence: removeAt, add, removeItem, reset
+	 ****************************************/
+	public void testStart7()
+	{
+<span class="fc" id="L249">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L250">		testStartAdd();</span>
+<span class="fc" id="L251">		testStartRemoveItemSuccess();</span>
+<span class="fc" id="L252">		testReset();</span>
+		
+		
+<span class="fc" id="L255">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart8()
+	 * Attribut: Start
+	 * Sequence: removeAt, add, reset, removeItem
+	 ****************************************/
+	public void testStart8()
+	{
+<span class="fc" id="L265">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L266">		testStartAdd();</span>
+<span class="fc" id="L267">		testReset();</span>
+<span class="fc" id="L268">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L269">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart9()
+	 * Attribut: Start
+	 * Sequence: removeAt, removeItem, add, reset
+	 ****************************************/
+	public void testStart9()
+	{
+<span class="fc" id="L279">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L280">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L281">		testStartAdd();</span>
+<span class="fc" id="L282">		testReset();	</span>
+<span class="fc" id="L283">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart10()
+	 * Attribut: Start
+	 * Sequence: removeAt, removeItem, reset, add
+	 ****************************************/
+	public void testStart10()
+	{
+<span class="fc" id="L293">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L294">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L295">		testReset();</span>
+<span class="fc" id="L296">		testStartAdd();</span>
+<span class="fc" id="L297">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart11()
+	 * Attribut: Start
+	 * Sequence: removeAt, reset, add, removeItem
+	 ****************************************/
+	public void testStart11()
+	{
+<span class="fc" id="L307">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L308">		testReset();</span>
+<span class="fc" id="L309">		testStartAdd();</span>
+<span class="fc" id="L310">		testStartRemoveItemSuccess();</span>
+<span class="fc" id="L311">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart12()
+	 * Attribut: Start
+	 * Sequence: removeAt, reset, removeItem, add
+	 ****************************************/
+	public void testStart12()
+	{
+<span class="fc" id="L321">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L322">		testReset();</span>
+<span class="fc" id="L323">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L324">		testStartAdd();</span>
+<span class="fc" id="L325">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart13()
+	 * Attribut: Start
+	 * Sequence: removeItem, add, removeAt, reset
+	 ****************************************/
+	public void testStart13()
+	{
+<span class="fc" id="L335">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L336">		testStartAdd();</span>
+<span class="fc" id="L337">		testStartRemoveAtSuccess();</span>
+<span class="fc" id="L338">		testReset();</span>
+<span class="fc" id="L339">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart14()
+	 * Attribut: Start
+	 * Sequence: removeItem, add, reset, removeAt
+	 ****************************************/
+	public void testStart14()
+	{
+<span class="fc" id="L349">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L350">		testStartAdd();</span>
+<span class="fc" id="L351">		testReset();</span>
+<span class="fc" id="L352">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L353">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart15()
+	 * Attribut: Start
+	 * Sequence: removeItem,  removeAt,  add, reset
+	 ****************************************/
+	public void testStart15()
+	{
+<span class="fc" id="L363">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L364">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L365">		testStartAdd();</span>
+<span class="fc" id="L366">		testReset();</span>
+<span class="fc" id="L367">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart16()
+	 * Attribut: Start
+	 * Sequence: removeItem, removeAt, reset, add
+	 ****************************************/
+	public void testStart16()
+	{
+<span class="fc" id="L377">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L378">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L379">		testReset();</span>
+<span class="fc" id="L380">		testStartAdd();</span>
+<span class="fc" id="L381">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart17()
+	 * Attribut: Start
+	 * Sequence: removeItem, reset, add, removeAt
+	 ****************************************/
+	public void testStart17()
+	{
+<span class="fc" id="L391">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L392">		testReset();</span>
+<span class="fc" id="L393">		testStartAdd();</span>
+<span class="fc" id="L394">		testStartRemoveAtSuccess();</span>
+<span class="fc" id="L395">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart18()
+	 * Attribut: Start
+	 * Sequence: removeItem, reset, removeAt, add
+	 ****************************************/
+	public void testStart18()
+	{
+<span class="fc" id="L405">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L406">		testReset();</span>
+<span class="fc" id="L407">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L408">		testStartAdd();</span>
+<span class="fc" id="L409">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart19()
+	 * Attribut: Start
+	 * Sequence: reset, add, removeAt, removeItem
+	 ****************************************/
+	public void testStart19()
+	{		
+<span class="fc" id="L419">		testReset();</span>
+<span class="fc" id="L420">		testStartAdd();</span>
+<span class="fc" id="L421">		testStartRemoveAtSuccess();</span>
+<span class="fc" id="L422">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L423">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart20()
+	 * Attribut: Start
+	 * Sequence: reset, add, removeItem, removeAt
+	 ****************************************/
+	public void testStart20()
+	{		
+<span class="fc" id="L433">		testReset();</span>
+<span class="fc" id="L434">		testStartAdd();</span>
+<span class="fc" id="L435">		testStartRemoveItemSuccess();</span>
+<span class="fc" id="L436">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L437">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart21()
+	 * Attribut: Start
+	 * Sequence: reset, removeAt, add, removeItem
+	 ****************************************/
+	public void testStart21()
+	{		
+<span class="fc" id="L447">		testReset();</span>
+<span class="fc" id="L448">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L449">		testStartAdd();</span>
+<span class="fc" id="L450">		testStartRemoveItemSuccess();</span>
+<span class="fc" id="L451">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart22()
+	 * Attribut: Start
+	 * Sequence: reset, removeAt, removeItem, add
+	 ****************************************/
+	public void testStart22()
+	{		
+<span class="fc" id="L461">		testReset();</span>
+<span class="fc" id="L462">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L463">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L464">		testStartAdd();</span>
+<span class="fc" id="L465">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart23()
+	 * Attribut: Start
+	 * Sequence: reset, removeItem, add, removeAt
+	 ****************************************/
+	public void testStart23()
+	{		
+<span class="fc" id="L475">		testReset();</span>
+<span class="fc" id="L476">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L477">		testStartAdd();</span>
+<span class="fc" id="L478">		testStartRemoveAtSuccess();</span>
+<span class="fc" id="L479">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testStart24()
+	 * Attribut: Start
+	 * Sequence: reset, removeItem, removeAt, add
+	 ****************************************/
+	public void testStart24()
+	{		
+<span class="fc" id="L489">		testReset();</span>
+<span class="fc" id="L490">		testStartRemoveItemFailure();</span>
+<span class="fc" id="L491">		testStartRemoveAtFailure();</span>
+<span class="fc" id="L492">		testStartAdd();</span>
+<span class="fc" id="L493">	}</span>
+	
+	/****************************************
+	 * Tests sur l'attribut Size
+	 ****************************************/
+	
+	@Test
+	/****************************************
+	 * Methode : testSize1()
+	 * Attribut: Size
+	 * Sequence: add, removeAt, removeItem, reset
+	 ****************************************/
+	public void testSize1()
+	{
+<span class="fc" id="L507">		testSizeAdd();</span>
+<span class="fc" id="L508">		testSizeRemoveAtSuccess();</span>
+<span class="fc" id="L509">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L510">		testReset();</span>
+<span class="fc" id="L511">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize2()
+	 * Attribut: Size
+	 * Sequence: add, removeAt, reset, removeItem
+	 ****************************************/
+	public void testSize2() 
+	{		
+<span class="fc" id="L521">		testSizeAdd();</span>
+<span class="fc" id="L522">		testSizeRemoveAtSuccess();</span>
+<span class="fc" id="L523">		testReset();</span>
+<span class="fc" id="L524">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L525">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize3()
+	 * Attribut: Size
+	 * Sequence: add, removeItem, removeAt, reset
+	 ****************************************/
+	public void testSize3()
+	{
+<span class="fc" id="L535">		testSizeAdd();</span>
+<span class="fc" id="L536">		testSizeRemoveItemSuccess();</span>
+<span class="fc" id="L537">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L538">		testReset();</span>
+<span class="fc" id="L539">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize4()
+	 * Attribut: Size
+	 * Sequence: add, removeItem, reset, removeAt
+	 ****************************************/
+	public void testSize4()
+	{
+<span class="fc" id="L549">		testSizeAdd();</span>
+<span class="fc" id="L550">		testSizeRemoveItemSuccess();</span>
+<span class="fc" id="L551">		testReset();</span>
+<span class="fc" id="L552">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L553">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize5()
+	 * Attribut: Size
+	 * Sequence: add, reset, removeAt, removeItem
+	 ****************************************/
+	public void testSize5()
+	{
+<span class="fc" id="L563">		testSizeAdd();</span>
+<span class="fc" id="L564">		testSizeRemoveItemSuccess();</span>
+<span class="fc" id="L565">		testReset();</span>
+<span class="fc" id="L566">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L567">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize6()
+	 * Attribut: Size
+	 * Sequence: add, reset, removeItem, removeAt
+	 ****************************************/
+	public void testSize6()
+	{
+<span class="fc" id="L577">		testSizeAdd();</span>
+<span class="fc" id="L578">		testReset();</span>
+<span class="fc" id="L579">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L580">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L581">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize7()
+	 * Attribut: Size
+	 * Sequence: removeAt, add, removeItem, reset
+	 ****************************************/
+	public void testSize7()
+	{
+<span class="fc" id="L591">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L592">		testSizeAdd();</span>
+<span class="fc" id="L593">		testSizeRemoveItemSuccess();</span>
+<span class="fc" id="L594">		testReset();</span>
+		
+		
+<span class="fc" id="L597">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize8()
+	 * Attribut: Size
+	 * Sequence: removeAt, add, reset, removeItem
+	 ****************************************/
+	public void testSize8()
+	{
+<span class="fc" id="L607">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L608">		testSizeAdd();</span>
+<span class="fc" id="L609">		testReset();</span>
+<span class="fc" id="L610">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L611">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize9()
+	 * Attribut: Size
+	 * Sequence: removeAt, removeItem, add, reset
+	 ****************************************/
+	public void testSize9()
+	{
+<span class="fc" id="L621">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L622">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L623">		testSizeAdd();</span>
+<span class="fc" id="L624">		testReset();	</span>
+<span class="fc" id="L625">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize10()
+	 * Attribut: Size
+	 * Sequence: removeAt, removeItem, reset, add
+	 ****************************************/
+	public void testSize10()
+	{
+<span class="fc" id="L635">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L636">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L637">		testReset();</span>
+<span class="fc" id="L638">		testSizeAdd();</span>
+<span class="fc" id="L639">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize11()
+	 * Attribut: Size
+	 * Sequence: removeAt, reset, add, removeItem
+	 ****************************************/
+	public void testSize11()
+	{
+<span class="fc" id="L649">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L650">		testReset();</span>
+<span class="fc" id="L651">		testSizeAdd();</span>
+<span class="fc" id="L652">		testSizeRemoveItemSuccess();</span>
+<span class="fc" id="L653">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize12()
+	 * Attribut: Size
+	 * Sequence: removeAt, reset, removeItem, add
+	 ****************************************/
+	public void testSize12()
+	{
+<span class="fc" id="L663">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L664">		testReset();</span>
+<span class="fc" id="L665">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L666">		testSizeAdd();</span>
+<span class="fc" id="L667">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize13()
+	 * Attribut: Size
+	 * Sequence: removeItem, add, removeAt, reset
+	 ****************************************/
+	public void testSize13()
+	{
+<span class="fc" id="L677">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L678">		testSizeAdd();</span>
+<span class="fc" id="L679">		testSizeRemoveAtSuccess();</span>
+<span class="fc" id="L680">		testReset();</span>
+<span class="fc" id="L681">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize14()
+	 * Attribut: Size
+	 * Sequence: removeItem, add, reset, removeAt
+	 ****************************************/
+	public void testSize14()
+	{
+<span class="fc" id="L691">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L692">		testSizeAdd();</span>
+<span class="fc" id="L693">		testReset();</span>
+<span class="fc" id="L694">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L695">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize15()
+	 * Attribut: Size
+	 * Sequence: removeItem,  removeAt,  add, reset
+	 ****************************************/
+	public void testSize15()
+	{
+<span class="fc" id="L705">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L706">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L707">		testSizeAdd();</span>
+<span class="fc" id="L708">		testReset();</span>
+<span class="fc" id="L709">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize16()
+	 * Attribut: Size
+	 * Sequence: removeItem, removeAt, reset, add
+	 ****************************************/
+	public void testSize16()
+	{
+<span class="fc" id="L719">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L720">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L721">		testReset();</span>
+<span class="fc" id="L722">		testSizeAdd();</span>
+<span class="fc" id="L723">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize17()
+	 * Attribut: Size
+	 * Sequence: removeItem, reset, add, removeAt
+	 ****************************************/
+	public void testSize17()
+	{
+<span class="fc" id="L733">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L734">		testReset();</span>
+<span class="fc" id="L735">		testSizeAdd();</span>
+<span class="fc" id="L736">		testSizeRemoveAtSuccess();</span>
+<span class="fc" id="L737">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize18()
+	 * Attribut: Size
+	 * Sequence: removeItem, reset, removeAt, add
+	 ****************************************/
+	public void testSize18()
+	{
+<span class="fc" id="L747">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L748">		testReset();</span>
+<span class="fc" id="L749">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L750">		testSizeAdd();</span>
+<span class="fc" id="L751">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize19()
+	 * Attribut: Size
+	 * Sequence: reset, add, removeAt, removeItem
+	 ****************************************/
+	public void testSize19()
+	{		
+<span class="fc" id="L761">		testReset();</span>
+<span class="fc" id="L762">		testSizeAdd();</span>
+<span class="fc" id="L763">		testSizeRemoveAtSuccess();</span>
+<span class="fc" id="L764">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L765">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize20()
+	 * Attribut: Size
+	 * Sequence: reset, add, removeItem, removeAt
+	 ****************************************/
+	public void testSize20()
+	{		
+<span class="fc" id="L775">		testReset();</span>
+<span class="fc" id="L776">		testSizeAdd();</span>
+<span class="fc" id="L777">		testSizeRemoveItemSuccess();</span>
+<span class="fc" id="L778">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L779">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize21()
+	 * Attribut: Size
+	 * Sequence: reset, removeAt, add, removeItem
+	 ****************************************/
+	public void testSize21()
+	{		
+<span class="fc" id="L789">		testReset();</span>
+<span class="fc" id="L790">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L791">		testSizeAdd();</span>
+<span class="fc" id="L792">		testSizeRemoveItemSuccess();</span>
+<span class="fc" id="L793">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize22()
+	 * Attribut: Size
+	 * Sequence: reset, removeAt, removeItem, add
+	 ****************************************/
+	public void testSize22()
+	{		
+<span class="fc" id="L803">		testReset();</span>
+<span class="fc" id="L804">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L805">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L806">		testSizeAdd();</span>
+<span class="fc" id="L807">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize23()
+	 * Attribut: Size
+	 * Sequence: reset, removeItem, add, removeAt
+	 ****************************************/
+	public void testSize23()
+	{		
+<span class="fc" id="L817">		testReset();</span>
+<span class="fc" id="L818">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L819">		testSizeAdd();</span>
+<span class="fc" id="L820">		testSizeRemoveAtSuccess();</span>
+<span class="fc" id="L821">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testSize24()
+	 * Attribut: Size
+	 * Sequence: reset, removeItem, removeAt, add
+	 ****************************************/
+	public void testSize24()
+	{		
+<span class="fc" id="L831">		testReset();</span>
+<span class="fc" id="L832">		testSizeRemoveItemFailure();</span>
+<span class="fc" id="L833">		testSizeRemoveAtFailure();</span>
+<span class="fc" id="L834">		testSizeAdd();</span>
+<span class="fc" id="L835">	}</span>
+	
+	/****************************************
+	 * Tests sur l'attribut Current
+	 ****************************************/
+	
+	@Test
+	/****************************************
+	 * Methode : testCurrent1()
+	 * Attribut: Current
+	 * Sequence: add, reset
+	 ****************************************/
+	public void testCurrent1()
+	{
+<span class="fc" id="L849">		testCurrentAdd();</span>
+<span class="fc" id="L850">		testReset();</span>
+<span class="fc" id="L851">	}</span>
+	
+	@Test
+	/****************************************
+	 * Methode : testCurrent2()
+	 * Attribut: Current
+	 * Sequence: reset, add
+	 ****************************************/
+	public void testCurrent2() 
+	{		
+<span class="fc" id="L861">		testReset();</span>
+<span class="fc" id="L862">		testCurrentAdd();</span>
+<span class="fc" id="L863">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>tests (Nov 19, 2016 11:44:06 AM)</div></body></html>

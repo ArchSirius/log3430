@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MyListImpl_testsExtra.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">tests (Nov 19, 2016 11:44:06 AM)</a> &gt; <a href="../../index.html" class="el_group">ListeChaineeProject</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">MyListImpl_testsExtra.java</span></div><h1>MyListImpl_testsExtra.java</h1><pre class="source lang-java linenums">package tests;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+import main.MyListImpl;
+
+<span class="fc" id="L11">public class MyListImpl_testsExtra {</span>
+	private MyListImpl mli;
+	
+	@Before
+	/*****************************************
+	 *	Methode qui initialise MyListImpl via son constructeur et
+	 *	valide les param�tres initiaux
+	 ****************************************/
+	public void setUp()
+	{
+		
+<span class="fc" id="L22">		mli  = new MyListImpl();</span>
+<span class="fc" id="L23">		assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+<span class="fc" id="L24">		assertNull(&quot;La propriete current devrait etre egale a start, et donc a null&quot;, mli.getCurrent());</span>
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">		assertTrue(&quot;La propriete size devrait etre egale a zero.&quot;,mli.getSize() == 0);</span>
+<span class="fc" id="L26">	}</span>
+	
+	@Test
+	/*****************************************
+	 * Methode qui verifie si une liste vide est geree pour SetAt
+	 ****************************************/
+	public void testEmptySet() {
+<span class="fc" id="L33">		ArrayList&lt;Object&gt; objList1 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L34">		objList1.add(new Integer(1));</span>
+		try
+		{
+<span class="nc" id="L37">			mli.setAt(objList1, 0);</span>
+<span class="nc" id="L38">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L39">		}</span>
+<span class="fc" id="L40">		catch(ArrayIndexOutOfBoundsException e)</span>
+		{
+<span class="fc" id="L42">			assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+		}
+<span class="nc" id="L44">		catch(Exception e) </span>
+		{
+<span class="nc" id="L46">			fail(&quot;Ceci devrait lancer une ArrayIndexOutOfBoundsException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+		
+<span class="fc" id="L49">	}</span>
+	
+	@Test
+	/*****************************************
+	 * Methode qui verifie si une liste vide est geree pour GetAt
+	 ****************************************/
+	public void testEmptyGet() {
+		try
+		{
+<span class="nc" id="L58">			mli.getAt(0);</span>
+<span class="nc" id="L59">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L60">		}</span>
+<span class="fc" id="L61">		catch(ArrayIndexOutOfBoundsException e)</span>
+		{
+<span class="fc" id="L63">			assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+		}
+<span class="nc" id="L65">		catch(Exception e) </span>
+		{
+<span class="nc" id="L67">			fail(&quot;Ceci devrait lancer une ArrayIndexOutOfBoundsException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+<span class="fc" id="L69">	}</span>
+	
+	@Test
+	/*****************************************
+	 * Methode qui verifie si la une position trop elevee est geree pour SetAt
+	 ****************************************/
+	public void testOverflowSet() {
+<span class="fc" id="L76">		ArrayList&lt;Object&gt; objList1 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L77">		objList1.add(new Integer(1));</span>
+<span class="fc" id="L78">		mli.add(objList1);</span>
+		try
+		{
+<span class="nc" id="L81">			mli.setAt(objList1, 1);</span>
+<span class="nc" id="L82">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L83">		}</span>
+<span class="fc" id="L84">		catch(ArrayIndexOutOfBoundsException e)</span>
+		{
+<span class="nc" id="L86">			assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+		}
+<span class="nc" id="L88">		catch(Exception e) </span>
+		{
+<span class="nc" id="L90">			fail(&quot;Ceci devrait lancer une ArrayIndexOutOfBoundsException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+<span class="nc" id="L92">	}</span>
+	
+	@Test
+	/*****************************************
+	 * Methode qui verifie si une position trop elevee est geree pour GetAt
+	 ****************************************/
+	public void testOverflowGet() {
+<span class="fc" id="L99">		ArrayList&lt;Object&gt; objList1 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L100">		objList1.add(new Integer(1));</span>
+<span class="fc" id="L101">		mli.add(objList1);</span>
+		try
+		{
+<span class="nc" id="L104">			mli.getAt(1);</span>
+<span class="nc" id="L105">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L106">		}</span>
+<span class="fc" id="L107">		catch(ArrayIndexOutOfBoundsException e)</span>
+		{
+<span class="nc" id="L109">			assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+		}
+<span class="nc" id="L111">		catch(Exception e) </span>
+		{
+<span class="nc" id="L113">			fail(&quot;Ceci devrait lancer une ArrayIndexOutOfBoundsException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+<span class="nc" id="L115">	}</span>
+	
+	@Test
+	/*****************************************
+	 * Methode qui verifie si la position negative est geree pour SetAt
+	 ****************************************/
+	public void testNegativeSet() {
+<span class="fc" id="L122">		ArrayList&lt;Object&gt; objList1 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L123">		objList1.add(new Integer(1));</span>
+		try
+		{
+<span class="nc" id="L126">			mli.setAt(objList1,-1);</span>
+<span class="nc" id="L127">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L128">		}</span>
+<span class="nc" id="L129">		catch(ArrayIndexOutOfBoundsException e)</span>
+		{
+<span class="nc" id="L131">			assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+		}
+<span class="fc" id="L133">		catch(Exception e) </span>
+		{
+<span class="nc" id="L135">			fail(&quot;Ceci devrait lancer une ArrayIndexOutOfBoundsException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+<span class="nc" id="L137">	}</span>
+	
+	@Test
+	/*****************************************
+	 * Methode qui verifie si la position negative est geree pour GetAt
+	 ****************************************/
+	public void testNegativeGet() {
+		try
+		{
+<span class="nc" id="L146">			mli.getAt(-1);</span>
+<span class="nc" id="L147">			fail(&quot;Une exception devrait etre lancee.&quot;);</span>
+<span class="nc" id="L148">		}</span>
+<span class="nc" id="L149">		catch(ArrayIndexOutOfBoundsException e)</span>
+		{
+<span class="nc" id="L151">			assertNull(&quot;La propriete start devrait etre egale a null&quot;, mli.getStart());</span>
+		}
+<span class="fc" id="L153">		catch(Exception e) </span>
+		{
+<span class="nc" id="L155">			fail(&quot;Ceci devrait lancer une ArrayIndexOutOfBoundsException, mais lance plutot une &quot;+e.getClass().getName());</span>
+		}
+<span class="nc" id="L157">	}</span>
+	
+	@Test
+	/*****************************************
+	 *	Methode qui teste les autres methodes qui accedent les attributs
+	 *  Start et Size.
+	 *  Les deux sont testes ensemble puisqu'ils sont un &quot;Getter&quot; et un &quot;Setter&quot; pour la meme information. 
+	 ****************************************/
+	public void testSetAndGetAt() {
+<span class="fc" id="L166">		ArrayList&lt;Object&gt; objList1 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L167">		ArrayList&lt;Object&gt; objList2 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L168">		ArrayList&lt;Object&gt; objList3 = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L169">		objList1.add(new Integer(1));</span>
+<span class="fc" id="L170">		objList1.add(new Integer(2));</span>
+<span class="fc" id="L171">		objList2.add(new Integer(3));</span>
+<span class="fc" id="L172">		objList2.add(new Integer(4));</span>
+<span class="fc" id="L173">		objList2.add(new Integer(5));</span>
+<span class="fc" id="L174">		objList3.add(new Integer(10));</span>
+<span class="fc" id="L175">		objList3.add(new Integer(11));</span>
+<span class="fc" id="L176">		objList3.add(new Integer(12));</span>
+<span class="fc" id="L177">		objList3.add(new Integer(13));</span>
+<span class="fc" id="L178">		mli.add(objList1);</span>
+<span class="fc" id="L179">		assertTrue(&quot;Le getAt a la position 0 devrait etre egal a objList1&quot;,mli.getAt(0).equals(objList1));</span>
+<span class="fc" id="L180">		mli.setAt(objList2,0);</span>
+<span class="fc" id="L181">		assertTrue(&quot;Le getAt a la position 0 devrait etre egal a objList2&quot;,mli.getAt(0).equals(objList2));</span>
+<span class="fc" id="L182">		mli.add(objList1);</span>
+<span class="fc" id="L183">		assertTrue(&quot;Le getAt a la position 1 devrait etre egal a objList1&quot;,mli.getAt(1).equals(objList1));</span>
+<span class="fc" id="L184">		mli.setAt(objList3,1);</span>
+<span class="fc" id="L185">		assertTrue(&quot;Le getAt a la position 1 devrait etre egal a objList3&quot;,mli.getAt(1).equals(objList3));</span>
+<span class="fc" id="L186">		mli.add(objList1);</span>
+<span class="fc" id="L187">		assertTrue(&quot;Le getAt a la position 2 devrait etre egal a objList1&quot;,mli.getAt(2).equals(objList1));</span>
+<span class="fc" id="L188">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>tests (Nov 19, 2016 11:44:06 AM)</div></body></html>
